@@ -1,0 +1,133 @@
+/* features-exact.css
+   - recreates screenshot: full-width horizontal lines, inner 1px separators and vertical guide lines
+   - place this file in same folder and import it in the component
+*/
+
+:root{
+  --line: #eaeaea;   /* soft gray for separators */
+  --title:#111;
+  --muted:#6b7280;
+  --icon-bg:#f3f4f6;
+  --maxW: 980px;     /* tune to visually match screenshot width */
+}
+
+/* Section spacing & background */
+.exact-features-section{
+  background: #fff;
+  color: var(--title);
+  padding: 48px 0 64px; /* top/bottom spacing */
+  position: relative;
+}
+
+/* Centered inner container */
+.exact-features-inner{
+  width: 100%;
+  max-width: var(--maxW);
+  margin: 0 auto;
+  padding: 0 24px;
+  text-align: center;
+  position: relative;
+  z-index: 2; /* keep above full-width guide lines */
+}
+
+/* small label and heading */
+.exact-features-inner .label{
+  display: inline-block;
+  background:#fafafa;
+  color:#6b6b6b;
+  padding:6px 10px;
+  border-radius:6px;
+  font-size:13px;
+  margin-bottom:12px;
+  border:1px solid #f0f0f0;
+}
+
+.exact-features-inner .heading{
+  margin: 6px 0 26px;
+  font-size:34px;
+  font-weight:700;
+  color:var(--title);
+}
+
+/* === Full-width horizontal guide lines (top & bottom) ===
+   these lines extend page-wide and match the thin faint lines in screenshot
+*/
+.exact-features-section::before,
+.exact-features-section::after{
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--line);
+  z-index: 1;
+  opacity: 1;
+}
+.exact-features-section::before{ top: 10px; }  /* adjust vertical position to match screenshot */
+.exact-features-section::after{ bottom: 10px; }
+
+/* === Grid frame (centered box holding the items) === */
+.grid-frame{
+  border-top: 1px solid var(--line);    /* top border inside the centered frame */
+  border-left: 1px solid var(--line);
+  border-right: 1px solid var(--line);
+  overflow: hidden;
+  /* visually the frame width equals inner container width */
+}
+
+/* features grid: 3 columns desktop, 2 tablet, 1 mobile */
+.features-grid{
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+/* feature item base */
+.feature-item{
+  padding: 28px 34px;
+  box-sizing: border-box;
+  background: #fff;
+  /* default borders (we will remove some using nth-child rules) */
+  border-bottom: 1px solid var(--line);
+  border-right: 1px solid var(--line);
+}
+
+/* icon box (small soft-gray square like screenshot) */
+.icon-box{
+  width:34px;
+  height:34px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  background: var(--icon-bg);
+  border-radius:8px;
+  border:1px solid #f0f3f6;
+  font-size:14px;
+}
+
+/* titles and desc */
+.feature-title{
+  margin:10px 0 8px;
+  font-size:15px;
+  font-weight:600;
+  color:var(--title);
+  text-align:left;
+}
+.feature-desc{
+  margin:0;
+  font-size:12px;
+  color:var(--muted);
+  line-height:1.45;
+  text-align:left;
+}
+
+/* ===== Tablet: 640px - 1023px => 2 columns ===== */
+@media (min-width:640px) and (max-width:1023px){
+  .features-grid{ grid-template-columns: repeat(2, 1fr); }
+
+  /* Remove bottom border for last row cells where not needed
+     and keep vertical separators consistent */
+  .features-grid > .feature-item:nth-child(1),
+  .features-grid > .feature-item:nth-child(2){
+    border-bottom: 1px solid var(--line);
+  }
+}
