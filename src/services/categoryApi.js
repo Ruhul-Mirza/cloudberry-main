@@ -1,28 +1,21 @@
-import axios from 'axios';
+import api from "./api";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
+// GET categories
+export const getCategories = (params) => {
+  return api.get("/categories", { params });
+};
 
-export const getCategories = (params) =>
-  axios.get(`${API_URL}/categories`, { params });
+// CREATE category
+export const createCategory = (data) => {
+  return api.post("/categories", data);
+};
 
-export const createCategory = (data) =>
-  axios.post(`${API_URL}/categories`, data,{
-    headers :{
-        Authorization : `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIiLCJlbWFpbCI6ImFkbWluMUBleGFtcGxlLmNvbSIsImlhdCI6MTc2OTk2NjAyOCwiZXhwIjoxNzcwNTcwODI4fQ.DyVxiKIuxDzbXH0aoi3JSwgG66mQHe4F8kStnClY20A`
-    }
-  });
+// UPDATE category
+export const updateCategory = (id, data) => {
+  return api.put(`/categories/${id}`, data);
+};
 
-export const updateCategory = (id, data) =>
-  axios.put(`${API_URL}/categories/${id}`, data,{
-      headers :{
-        Authorization : `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIiLCJlbWFpbCI6ImFkbWluMUBleGFtcGxlLmNvbSIsImlhdCI6MTc2OTk2NjAyOCwiZXhwIjoxNzcwNTcwODI4fQ.DyVxiKIuxDzbXH0aoi3JSwgG66mQHe4F8kStnClY20A`
-    }
-  
-  });
-
-export const deleteCategory = (id) =>
-  axios.delete(`${API_URL}/categories/${id}`,{
-     headers :{
-        Authorization : `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIiLCJlbWFpbCI6ImFkbWluMUBleGFtcGxlLmNvbSIsImlhdCI6MTc2OTk2NjAyOCwiZXhwIjoxNzcwNTcwODI4fQ.DyVxiKIuxDzbXH0aoi3JSwgG66mQHe4F8kStnClY20A`
-    }
-  });
+// DELETE category
+export const deleteCategory = (id) => {
+  return api.delete(`/categories/${id}`);
+};

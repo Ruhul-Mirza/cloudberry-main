@@ -20,6 +20,7 @@ import ColorSchemeToggle from './ColorSchemeToggle';
 import { closeSidebar } from '../lib/utils';
 import Link from 'next/link';
 import { StarTwoTone } from '@mui/icons-material';
+import { logoutUser } from '@/services/auth';
 
 function Toggler({
   defaultExpanded = false,
@@ -49,6 +50,7 @@ function Toggler({
 }
 
 export default function Sidebar() {
+  const admindata  = JSON.parse(localStorage.getItem("admin"))
   return (
     <Sheet
       className="Sidebar"
@@ -204,10 +206,12 @@ export default function Sidebar() {
           src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286"
         />
         <Box sx={{ minWidth: 0, flex: 1 }}>
-          <Typography level="title-sm">Siriwat K.</Typography>
-          <Typography level="body-xs">siriwatk@test.com</Typography>
+          <Typography level="title-sm">{admindata?.username ?? ""}</Typography>
+          <Typography level="body-xs">{admindata?.email ?? ""}</Typography>
         </Box>
-        <IconButton size="sm" variant="plain" color="neutral">
+        <IconButton onClick={()=>{
+          logoutUser()
+        }} size="sm" variant="plain" color="neutral">
           <LogoutRoundedIcon />
         </IconButton>
       </Box>

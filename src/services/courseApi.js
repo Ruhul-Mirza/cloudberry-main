@@ -1,31 +1,28 @@
-import axios from "axios";
+// src/services/courses.service.ts
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
+import api from "./api";
 
-export const getCourses = (params) =>
-  axios.get(`${API_URL}/courses`, { params });
+// GET all courses
+export const getCourses = (params) => {
+  return api.get("/courses", { params });
+};
 
-export const getCourseById = (id) =>
-  axios.get(`${API_URL}/courses/${id}`);
+// GET course by id
+export const getCourseById = (id) => {
+  return api.get(`/courses/${id}`);
+};
 
-export const createCourse = (data) =>
-  axios.post(`${API_URL}/courses`, data,{
-      headers :{
-        Authorization : `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIiLCJlbWFpbCI6ImFkbWluMUBleGFtcGxlLmNvbSIsImlhdCI6MTc2OTk2NjAyOCwiZXhwIjoxNzcwNTcwODI4fQ.DyVxiKIuxDzbXH0aoi3JSwgG66mQHe4F8kStnClY20A`
-    }
-  
-  });
+// CREATE course
+export const createCourse = (data) => {
+  return api.post("/courses", data);
+};
 
-export const updateCourse = (id, data) =>
-  axios.put(`${API_URL}/courses/${id}`, data,{
-     headers :{
-        Authorization : `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIiLCJlbWFpbCI6ImFkbWluMUBleGFtcGxlLmNvbSIsImlhdCI6MTc2OTk2NjAyOCwiZXhwIjoxNzcwNTcwODI4fQ.DyVxiKIuxDzbXH0aoi3JSwgG66mQHe4F8kStnClY20A`
-    }
-  });
+// UPDATE course
+export const updateCourse = (id, data) => {
+  return api.put(`/courses/${id}`, data);
+};
 
-export const deleteCourse = (id) =>
-  axios.delete(`${API_URL}/courses/${id}`,{
-     headers :{
-        Authorization : `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIiLCJlbWFpbCI6ImFkbWluMUBleGFtcGxlLmNvbSIsImlhdCI6MTc2OTk2NjAyOCwiZXhwIjoxNzcwNTcwODI4fQ.DyVxiKIuxDzbXH0aoi3JSwgG66mQHe4F8kStnClY20A`
-    }
-  });
+// DELETE course
+export const deleteCourse = (id) => {
+  return api.delete(`/courses/${id}`);
+};

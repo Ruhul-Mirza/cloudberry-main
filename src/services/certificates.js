@@ -1,29 +1,23 @@
-import axios from "axios";
+// src/services/certificates.service.ts
 
-const API_URL =
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
+import api from "./api";
 
-const AUTH_HEADER = {
-  Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjIiLCJlbWFpbCI6ImFkbWluMUBleGFtcGxlLmNvbSIsImlhdCI6MTc2OTk2NjAyOCwiZXhwIjoxNzcwNTcwODI4fQ.DyVxiKIuxDzbXH0aoi3JSwgG66mQHe4F8kStnClY20A`
+// GET certificates
+export const getCertificates = (params) => {
+  return api.get("/certificates", { params });
 };
 
-export const getCertificates = (params) =>
-  axios.get(`${API_URL}/certificates`, {
-    headers: AUTH_HEADER,
-    params
-  });
+// CREATE certificate
+export const createCertificate = (data) => {
+  return api.post("/certificates", data);
+};
 
-export const createCertificate = (data) =>
-  axios.post(`${API_URL}/certificates`, data, {
-    headers: AUTH_HEADER
-  });
+// UPDATE certificate
+export const updateCertificate = (id, data) => {
+  return api.put(`/certificates/${id}`, data);
+};
 
-export const updateCertificate = (id, data) =>
-  axios.put(`${API_URL}/certificates/${id}`, data, {
-    headers: AUTH_HEADER
-  });
-
-export const deleteCertificate = (id) =>
-  axios.delete(`${API_URL}/certificates/${id}`, {
-    headers: AUTH_HEADER
-  });
+// DELETE certificate
+export const deleteCertificate = (id) => {
+  return api.delete(`/certificates/${id}`);
+};

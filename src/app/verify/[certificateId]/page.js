@@ -46,7 +46,7 @@ export default function VerifyCertificate() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/certificates/verify/${certificateId}`)
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/certificates/verify/${certificateId}`)
       .then((res) => res.json())
       .then((result) => {
         console.log(result?.data?.[0]?.[0]);
@@ -338,7 +338,7 @@ export default function VerifyCertificate() {
             }}
           >
             <iframe
-              src={`http://localhost:5000/api/certificates/preview/${certificateId}`}
+              src={`${process.env.NEXT_PUBLIC_API_URL}/certificates/preview/${certificateId}`}
               style={{
                 width: "100%",
                 height: "600px",
@@ -365,7 +365,7 @@ export default function VerifyCertificate() {
           </Button>
           <Button
             component="a"
-            href={`http://localhost:5000/api/certificates/preview/${certificateId}`}
+            href={`${process.env.NEXT_PUBLIC_API_URL}/certificates/preview/${certificateId}`}
             target="_blank"
             size="lg"
             startDecorator={<DownloadRoundedIcon />}
