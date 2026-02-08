@@ -7,16 +7,24 @@ import Footer from "@/components/ui/Footer";
 import Features from "@/components/ui/Features";
 import SecondaryCta from "@/components/ui/SecondaryCta";
 import WhyUs from "@/components/ui/WhyUs";
+import HeroSectionHome from "@/components/HeroSectionHome";
+import Reviews from "@/components/Review";
+import WhoWeAre from "@/components/ui/WhoWeAre";
+import ComparisonSection from "@/components/ui/ComparisonSection";
 export default function Home() {
   return (
     <>
-      <div className="bg-gradient-to-tr from-zinc-100 via-white to-zinc-300">
+      <div>
         <Navbar />
-        <HeroSection />
-      <TestimonialShowcase />
+        <HeroSectionHome/>
+        {/* <HeroSection /> */}
+        <Reviews/>
+        <WhoWeAre/>
+        <ComparisonSection/>
+      {/* <TestimonialShowcase /> */}
       </div>
-      <ImageSection />
-      <Features />
+      {/* <ImageSection /> */}
+      {/* <Features /> */}
 
       {/* <Header/> */}
       {/* <Form/> */}

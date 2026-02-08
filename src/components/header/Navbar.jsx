@@ -84,7 +84,7 @@ function Navbar() {
 
   return (
     <>
-      <nav className="bg-transparent relative z-10">
+      <nav className="bg-transparent relative z-12">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
@@ -99,7 +99,7 @@ function Navbar() {
             </div>
 
             {/* Central Bar */}
-            <div className="hidden xl:flex items-center bg-white shadow-gray-200 rounded-full shadow-lg pl-6 pr-2 py-2 border border-gray-200 max-w-2xl">
+            <div className="hidden xl:flex items-center bg-white shadow-gray-200 rounded-full shadow-sm pl-6 pr-2 py-2 border border-gray-200 max-w-2xl">
               <div className="flex items-center space-x-4">
                 {coursesItems.map((courseItem, index) => (
                   <div

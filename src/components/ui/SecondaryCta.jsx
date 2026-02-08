@@ -5,11 +5,11 @@ import { ArrowRight } from "lucide-react";
 
 export default function SecondaryCta() {
   return (
-    <section className="relative bg-white border-t border py-28 px-6">
+    <section className="relative bg-gray-100 border-t  py-28 px-6">
       {/* === Inner Gradient Box === */}
-      <div className="relative max-w-5xl mx-auto rounded-3xl overflow-hidden border border-gray-800 shadow-3xl">
+      <div className="relative max-w-5xl mx-auto rounded-xl overflow-hidden border border-gray-800 shadow-3xl">
         {/* Gradient Background Inside the Box */}
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-black to-gray-800"></div>
+        <div className="absolute inset-0 bg-black"></div>
 
         {/* === CTA Content === */}
         <div className="relative text-center text-white px-8 py-20">

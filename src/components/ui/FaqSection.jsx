@@ -31,7 +31,7 @@ export default function FaqSection() {
   const toggle = (i) => setOpen(open === i ? null : i);
 
   return (
-    <section className="relative bg-black text-white py-28 overflow-hidden">
+    <section className="relative bg-zinc-950 text-white py-28 overflow-hidden">
       {/* Header */}
       <div className="max-w-5xl mx-auto px-6 mb-16 text-center">
         <h2 className="text-4xl md:text-5xl font-semibold tracking-tight bg-gradient-to-r from-white via-gray-300 to-gray-500 bg-clip-text text-transparent">
@@ -57,7 +57,7 @@ export default function FaqSection() {
             {open === i && (
               <motion.div
                 layoutId="faq-accent"
-                className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"
+                className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-gray-50 via-gray-500 to-gray-900"
               />
             )}
 

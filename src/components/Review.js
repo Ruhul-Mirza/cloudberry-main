@@ -1,0 +1,220 @@
+"use client"
+import { useRef, useState, useCallback } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
+import Tooltip from "@mui/material/Tooltip";
+import { ArrowLeft, ArrowRight, Play } from "lucide-react";
+import "swiper/css";
+
+const testimonials = [
+  {
+    id: 1,
+    name: "Nikhil YN",
+    role: "Software Engineer",
+    story:
+      "Got 2 job offers with a 400% salary hike after switching careers.asdjaskdhasuhdgauh sdjnasbuhabsuhfbahudsbfjn adsuyasgfiasdjbnf asduyfgaubsahugfyds fnasdfbyuagd",
+    video: "https://www.youtube.com/embed/j0hBoqOVVFk",
+  },
+  {
+    id: 2,
+    name: "Herin Wilson",
+    role: "IT Associate",
+    story: "Transitioned",
+    video: "https://www.youtube.com/embed/PxIRMaJMOjY",
+  },
+  {
+    id: 3,
+    name: "Ayush Shah",
+    role: "Data Analyst",
+    story: "Landed a dream job as a fresher in a top MNC.",
+    video: "https://www.youtube.com/embed/sPM2MJyF6xo",
+  },
+  {
+    id: 4,
+    name: "Somika Simlote",
+    role: "Sr. Engg at Persistent Systems",
+    story: "Became financially independent after upskilling.",
+    video: "https://www.youtube.com/embed/BzhcQuYVWYo",
+  },
+];
+
+const TestimonialCard = ({ testimonial, isPlaying, onPlay }) => {
+  const getVideoThumbnail = (videoUrl) => {
+    const videoId = videoUrl.split("/embed/")[1];
+    return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+  };
+
+  return (
+    <div className="group relative h-[460px] w-full">
+      <div className="absolute -inset-px rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+        <div className="absolute top-0 left-0 w-12 h-12 border-l-2 border-t-2 border-foreground rounded-tl-3xl" />
+        <div className="absolute bottom-0 right-0 w-12 h-12 border-r-2 border-b-2 border-foreground rounded-br-3xl" />
+      </div>
+
+      <div className="relative h-full bg-card border border-border rounded-3xl p-4 shadow-sm grid grid-rows-[auto_1fr_auto]">
+        <div className="relative w-full h-[220px] rounded-2xl overflow-hidden bg-muted">
+          {isPlaying ? (
+            <iframe
+              src={`${testimonial.video}?autoplay=1&rel=0`}
+              className="absolute inset-0 w-full h-full"
+              allow="autoplay; encrypted-media"
+              allowFullScreen
+            />
+          ) : (
+            <>
+              <img
+                src={getVideoThumbnail(testimonial.video)}
+                alt={testimonial.name}
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+
+              <button
+                onClick={onPlay}
+                className="absolute inset-0 flex items-center justify-center"
+              >
+                <div className="w-16 h-16 rounded-full bg-white flex items-center justify-center shadow-lg">
+                  <Play
+                    className="w-6 h-6 text-black ml-1"
+                    fill="currentColor"
+                  />
+                </div>
+              </button>
+
+              <div className="absolute bottom-3 right-3 px-2 py-1 rounded-md bg-black/80 text-white text-[10px]">
+                WATCH
+              </div>
+            </>
+          )}
+        </div>
+
+        <Tooltip
+          title={
+            <span className="text-sm leading-relaxed">{testimonial.story}</span>
+          }
+          arrow
+          placement="bottom"
+        >
+          <p className="mt-5 text-sm text-foreground leading-relaxed line-clamp-3 max-h-[4.5rem] overflow-hidden cursor-help">
+            {testimonial.story}
+          </p>
+        </Tooltip>
+
+        <div className="flex items-center gap-3 pt-4">
+          <div className="w-11 h-11 rounded-full bg-secondary flex items-center justify-center font-bold">
+            {testimonial.name
+              .split(" ")
+              .map((n) => n[0])
+              .join("")}
+          </div>
+
+          <div className="flex-1">
+            <p className="font-semibold text-sm">{testimonial.name}</p>
+            <p className="text-xs text-muted-foreground line-clamp-1">
+              {testimonial.role}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const Reviews = () => {
+  const swiperRef = useRef(null);
+  const [playingVideo, setPlayingVideo] = useState(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  // SOLUTION: Duplicate slides if there are fewer than 8 to satisfy loop requirements 
+  // and prevent the Swiper warning.
+  const displayTestimonials = testimonials.length < 8 
+    ? [...testimonials, ...testimonials] 
+    : testimonials;
+
+  const handlePrev = useCallback(() => {
+    swiperRef.current?.slidePrev();
+  }, []);
+
+  const handleNext = useCallback(() => {
+    console.log("next")
+    swiperRef.current?.slideNext();
+  }, []);
+
+  return (
+    <section className="bg-gray-50 py-16 md:py-24 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6 mb-12 md:mb-16">
+          <div>
+            <div className="inline-flex items-center gap-2 mb-4">
+              <div className="w-8 h-[2px] bg-foreground" />
+              <span className="text-xs font-medium text-muted-foreground uppercase tracking-widest">
+                Testimonials
+              </span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground leading-tight">
+              Transforming Careers,
+              <br />
+              <span className="text-muted-foreground">One Story at a Time</span>
+            </h2>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handlePrev}
+              className="w-12 h-12 rounded-full border border-border flex items-center justify-center hover:bg-muted transition-colors"
+            >
+              <ArrowLeft className="w-4 h-4" />
+            </button>
+            <button
+              onClick={handleNext}
+              className="w-12 h-12 rounded-full bg-foreground text-primary-foreground flex items-center justify-center hover:opacity-90 transition-opacity"
+            >
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+        <Swiper
+          className="items-stretch"
+          onSwiper={(swiper) => (swiperRef.current = swiper)}
+          onSlideChange={(swiper) => {
+            setActiveIndex(swiper.realIndex);
+            setPlayingVideo(null);
+          }}
+          modules={[Autoplay]}
+          loop={true}
+          speed={800}
+          spaceBetween={28}
+          slidesPerView={1}
+          autoplay={{
+            delay: 5000,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true,
+          }}
+          breakpoints={{
+            480: { slidesPerView: 1.5 },
+            640: { slidesPerView: 2 },
+            1024: { slidesPerView: 3 },
+            1280: { slidesPerView: 4 },
+          }}
+        >
+          {displayTestimonials.map((testimonial, idx) => (
+            <SwiperSlide key={`${testimonial.id}-${idx}`} className="h-auto flex">
+              <TestimonialCard
+                testimonial={testimonial}
+                index={idx}
+                isPlaying={playingVideo === testimonial.id}
+                onPlay={() => {
+                  setPlayingVideo(testimonial.id);
+                  swiperRef.current?.autoplay.stop();
+                }}
+              />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
+    </section>
+  );
+};
+
+export default Reviews;
