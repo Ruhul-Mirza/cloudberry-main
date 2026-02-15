@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, KeyboardEvent } from "react";
 import { Facebook, Instagram, Linkedin } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -22,9 +22,15 @@ export default function Header() {
     setIsOpen(false);
   }, [pathname]);
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      setIsOpen((prev) => !prev);
+    }
+  };
+
   return (
     <>
-      {/* Overlay */}
       {isOpen && (
         <div
           onClick={() => setIsOpen(false)}
@@ -33,65 +39,54 @@ export default function Header() {
       )}
 
       <nav className="fixed top-5 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-[540px]">
-        {/* OUTER CONTAINER */}
-        <div
-          className={`bg-black rounded-sm overflow-hidden shadow-sm transition-all duration-500
-          ${isOpen ? "max-w-[600px]" : "max-w-[540px]"}`}
-        >
+        <div className="bg-black rounded-sm overflow-hidden shadow-lg transition-all duration-500">
+          
           {/* TOP BAR */}
-          <div className="relative px-2 py-1"> 
+          <div className="relative px-3 py-2">
+            <div className="grid grid-cols-3 items-center">
 
-            <div className="relative z-10 flex items-center justify-between">
-              {/* Logo */}
-              <div className="flex h-[44px] items-center">
+              {/* LEFT - Logo */}
+              <div className="flex items-center">
                 <Link href="/">
                   <Image
                     src={logo}
                     alt="CloudBerry Logo"
                     width={176}
                     height={48}
-                    className="w-32 sm:w-40 h-auto"
+                    className="w-32 sm:w-36 h-auto"
+                    priority
                   />
                 </Link>
               </div>
 
-              {/* Hamburger */}
-              <div className="flex items-center">
-                <div className="h-8 w-px bg-white mx-1" />
+              {/* CENTER - Hamburger */}
+              <div className="flex justify-center">
                 <button
-                  onClick={() => setIsOpen(!isOpen)}
-                  className="w-10 h-10 flex flex-col items-center justify-center gap-[5px] bg-white rounded-full transition"
-                  aria-label="Toggle menu"
+                  onClick={() => setIsOpen((prev) => !prev)}
+                  onKeyDown={handleKeyDown}
+                  aria-label={isOpen ? "Close menu" : "Open menu"}
+                  aria-expanded={isOpen}
+                  className="relative w-8 h-8 flex flex-col justify-center items-center gap-[6px] group cursor-pointer"
                 >
-                  {isOpen ? (
-                    <svg
-                      width="16"
-                      height="16"
-                      viewBox="0 0 16 16"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="1.8"
-                      strokeLinecap="round"
-                    >
-                      <line x1="2" y1="2" x2="14" y2="14" />
-                      <line x1="14" y1="2" x2="2" y2="14" />
-                    </svg>
-                  ) : (
-                    <>
-                      <span className="block w-[17px] h-[1.8px] bg-black rounded-full" />
-                      <span className="block w-[17px] h-[1.8px] bg-black rounded-full" />
-                    </>
-                  )}
+                  <span
+                    className={`w-[28px] h-[2px] bg-white transition-all duration-300 origin-center
+                    ${isOpen ? "rotate-45 translate-y-[4px]" : ""}
+                    group-hover:opacity-80`}
+                  />
+                  <span
+                    className={`w-[28px] h-[2px] bg-white transition-all duration-300 origin-center
+                    ${isOpen ? "-rotate-45 -translate-y-[4px]" : ""}
+                    group-hover:opacity-80`}
+                  />
                 </button>
-                <div className="h-8 w-px bg-white mx-1" />
               </div>
 
-              {/* CTA */}
-              <button className="w-32 sm:w-40 py-1 sm:py-1.5 text-white font-medium rounded-[4px] text-[15px] sm:text-[16px]
-                border border-white bg-black
-                hover:bg-white hover:text-black transition">
-                Get Started
-              </button>
+              {/* RIGHT - CTA */}
+              <div className="flex justify-end">
+                <button className="hidden sm:block w-32 py-1.5 text-white font-medium rounded-[4px] text-[15px] border border-white bg-black hover:bg-white hover:text-black transition">
+                  Get Started
+                </button>
+              </div>
             </div>
           </div>
 
@@ -116,16 +111,16 @@ export default function Header() {
                       key={link.label}
                       href={link.href}
                       className={`py-4 text-[17px] font-medium relative transition-colors
-                        ${
-                          i < navLinks.length - 1
-                            ? "border-b border-dashed border-white/20"
-                            : ""
-                        }
-                        ${
-                          isActive
-                            ? "text-white"
-                            : "text-white/70 hover:text-white"
-                        }`}
+                      ${
+                        i < navLinks.length - 1
+                          ? "border-b border-dashed border-white/20"
+                          : ""
+                      }
+                      ${
+                        isActive
+                          ? "text-white"
+                          : "text-white/70 hover:text-white"
+                      }`}
                     >
                       {link.label}
                       
