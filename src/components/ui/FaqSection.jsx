@@ -31,7 +31,7 @@ export default function FaqSection() {
   const toggle = (i) => setOpen(open === i ? null : i);
 
   return (
-    <section className="relative bg-zinc-950 text-white py-28 overflow-hidden">
+    <section className="relative z-51 bg-zinc-950 text-white py-28 overflow-hidden">
       {/* Header */}
       <div className="max-w-5xl mx-auto px-6 mb-16 text-center">
         <h2 className="text-4xl md:text-5xl font-semibold tracking-tight bg-gradient-to-r from-white via-gray-300 to-gray-500 bg-clip-text text-transparent">

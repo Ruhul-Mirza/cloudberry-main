@@ -10,16 +10,20 @@ import WhyUs from "@/components/ui/WhyUs";
 import HeroSectionHome from "@/components/HeroSectionHome";
 import Reviews from "@/components/Review";
 import WhoWeAre from "@/components/ui/WhoWeAre";
+import Header from "@/components/header/Header";
 import ComparisonSection from "@/components/ui/ComparisonSection";
+import LinkedInReviewsSlider from "@/components/LinkedInReviews"; 
 export default function Home() {
   return (
     <>
       <div>
-        <Navbar />
+        {/* <Navbar /> */}
+        {/* <Header/> */}
         <HeroSectionHome/>
         {/* <HeroSection /> */}
         <Reviews/>
         <WhoWeAre/>
+        <LinkedInReviewsSlider/>
         <ComparisonSection/>
       {/* <TestimonialShowcase /> */}
       </div>
@@ -33,7 +37,7 @@ export default function Home() {
       <SecondaryCta />
       <FaqSection />
 
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }

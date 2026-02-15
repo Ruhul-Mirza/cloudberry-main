@@ -5,7 +5,7 @@ import { ArrowRight } from "lucide-react";
 
 export default function SecondaryCta() {
   return (
-    <section className="relative bg-gray-100 border-t  py-28 px-6">
+    <section className="relative z-51 bg-gray-100 border-t  py-28 px-6">
       {/* === Inner Gradient Box === */}
       <div className="relative max-w-5xl mx-auto rounded-xl overflow-hidden border border-gray-800 shadow-3xl">
         {/* Gradient Background Inside the Box */}

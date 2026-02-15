@@ -6,7 +6,7 @@ import { Button } from "./ui/button";
 
 export default function HeroSectionHome() {
   return (
-    <section className="relative bg-white -mt-6 lg:-mt-12 border-b overflow-hidden lg:overflow-visible">
+    <section className="relative bg-white mt-10 border-b overflow-hidden lg:overflow-visible">
       {/* ================= CENTER CONTENT ================= */}
       <div className="relative z-10 flex flex-col items-center text-center px-4 pt-16 lg:pt-0 lg:justify-center lg:min-h-screen">
         <div className="inline-flex items-center gap-2 border rounded-full px-4 py-1 mb-6">
