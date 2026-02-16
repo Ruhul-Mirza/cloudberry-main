@@ -16,6 +16,7 @@ import {
 import { Box, Button } from "@mui/joy";
 import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
 import BlockIcon from "@mui/icons-material/Block";
+import DynamicTitle from "@/components/DynamicTitle";
 
 export default function Page() {
   const [courses, setCourses] = useState([]);
@@ -124,7 +125,8 @@ export default function Page() {
 
   return (
     <>
-      <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 2 }}>
+      <Box sx={{ display: "flex", justifyContent:"space-between",alignItems:"center", mb: 2 }}>
+        <DynamicTitle/>
         <Button onClick={() => setAddOpen(true)} disabled={loading || actionLoading}>
           Add Course
         </Button>

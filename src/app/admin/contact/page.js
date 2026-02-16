@@ -9,6 +9,7 @@ import {
   updateContactStatus,
   deleteContact,
 } from "@/services/contactService";
+import DynamicTitle from "@/components/DynamicTitle";
 
 export default function Page() {
   const [data, setData] = useState([]);
@@ -118,6 +119,7 @@ export default function Page() {
   ========================== */
   return (
     <>
+    <DynamicTitle/>
       <DataTable
         data={data}
         columns={columns}

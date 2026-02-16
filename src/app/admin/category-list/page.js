@@ -17,6 +17,7 @@ import {
 import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
 import BlockIcon from "@mui/icons-material/Block";
 import { Button, Box } from "@mui/joy";
+import DynamicTitle from "@/components/DynamicTitle";
 
 export default function Page() {
   const [categories, setCategories] = useState([]);
@@ -163,6 +164,7 @@ export default function Page() {
 
   return (
     <>
+    <DynamicTitle/>
       {/* ===== Header Add Button ===== */}
       <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 2 }}>
         <Button

@@ -1,56 +1,77 @@
-import * as React from 'react';
-import GlobalStyles from '@mui/joy/GlobalStyles';
-import Avatar from '@mui/joy/Avatar';
-import Box from '@mui/joy/Box';
-import Divider from '@mui/joy/Divider';
-import IconButton from '@mui/joy/IconButton';
-import List from '@mui/joy/List';
-import ListItem from '@mui/joy/ListItem';
-import ListItemButton, { listItemButtonClasses } from '@mui/joy/ListItemButton';
-import ListItemContent from '@mui/joy/ListItemContent';
-import Typography from '@mui/joy/Typography';
-import Sheet from '@mui/joy/Sheet';
-import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
-import AssignmentRoundedIcon from '@mui/icons-material/AssignmentRounded';
-import WorkspacePremiumIcon from '@mui/icons-material/WorkspacePremium';
-import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
-import PermContactCalendarIcon from '@mui/icons-material/PermContactCalendar';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import ColorSchemeToggle from './ColorSchemeToggle';
-import { closeSidebar } from '../lib/utils';
-import Link from 'next/link';
-import { StarTwoTone } from '@mui/icons-material';
-import { logoutUser } from '@/services/auth';
+"use client";
 
-function Toggler({
-  defaultExpanded = false,
-  renderToggle,
-  children,
-}) {
+import * as React from "react";
+import { usePathname } from "next/navigation";
+import GlobalStyles from "@mui/joy/GlobalStyles";
+import Avatar from "@mui/joy/Avatar";
+import Box from "@mui/joy/Box";
+import Divider from "@mui/joy/Divider";
+import IconButton from "@mui/joy/IconButton";
+import List from "@mui/joy/List";
+import ListItem from "@mui/joy/ListItem";
+import ListItemButton, {
+  listItemButtonClasses,
+} from "@mui/joy/ListItemButton";
+import ListItemContent from "@mui/joy/ListItemContent";
+import Typography from "@mui/joy/Typography";
+import Sheet from "@mui/joy/Sheet";
+import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
+import AssignmentRoundedIcon from "@mui/icons-material/AssignmentRounded";
+import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
+import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
+import PermContactCalendarIcon from "@mui/icons-material/PermContactCalendar";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import ColorSchemeToggle from "./ColorSchemeToggle";
+import { closeSidebar } from "../lib/utils";
+import Link from "next/link";
+import StarTwoTone from "@mui/icons-material/StarTwoTone";
+import { logoutUser } from "@/services/auth";
+
+function Toggler({ defaultExpanded = false, renderToggle, children }) {
   const [open, setOpen] = React.useState(defaultExpanded);
+
+  React.useEffect(() => {
+    setOpen(defaultExpanded);
+  }, [defaultExpanded]);
+
   return (
-    <React.Fragment>
+    <>
       {renderToggle({ open, setOpen })}
       <Box
         sx={[
           {
-            display: 'grid',
-            transition: '0.2s ease',
-            '& > *': {
-              overflow: 'hidden',
-            },
+            display: "grid",
+            transition: "0.2s ease",
+            "& > *": { overflow: "hidden" },
           },
-          open ? { gridTemplateRows: '1fr' } : { gridTemplateRows: '0fr' },
+          open ? { gridTemplateRows: "1fr" } : { gridTemplateRows: "0fr" },
         ]}
       >
         {children}
       </Box>
-    </React.Fragment>
+    </>
   );
 }
 
 export default function Sidebar() {
-  const admindata  = JSON.parse(localStorage.getItem("admin"))
+  const pathname = usePathname();
+
+  const [admindata, setAdminData] = React.useState(null);
+
+  React.useEffect(() => {
+    if (typeof window !== "undefined") {
+      const data = localStorage.getItem("admin");
+      if (data) setAdminData(JSON.parse(data));
+    }
+  }, []);
+
+  const isActive = (path) =>
+    pathname === path || pathname.startsWith(path + "/");
+
+  const isCoursesActive =
+    isActive("/admin/course-list") ||
+    isActive("/admin/category-list");
+
   return (
     <Sheet
       className="Sidebar"
@@ -84,6 +105,7 @@ export default function Sidebar() {
           },
         })}
       />
+
       <Box
         className="Sidebar-overlay"
         sx={{
@@ -103,19 +125,22 @@ export default function Sidebar() {
         }}
         onClick={() => closeSidebar()}
       />
-      
-      <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
+
+      {/* Header */}
+      <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
         <Typography level="title-lg">Admin Portal</Typography>
-        <ColorSchemeToggle sx={{ ml: 'auto' }} />
+        <ColorSchemeToggle sx={{ ml: "auto" }} />
       </Box>
+
       <Divider />
+
       <Box
         sx={{
           minHeight: 0,
-          overflow: 'hidden auto',
+          overflow: "hidden auto",
           flexGrow: 1,
-          display: 'flex',
-          flexDirection: 'column',
+          display: "flex",
+          flexDirection: "column",
           [`& .${listItemButtonClasses.root}`]: {
             gap: 1.5,
           },
@@ -125,93 +150,150 @@ export default function Sidebar() {
           size="sm"
           sx={{
             gap: 1,
-            '--List-nestedInsetStart': '30px',
-            '--ListItem-radius': (theme) => theme.vars.radius.sm,
+            "--List-nestedInsetStart": "30px",
+            "--ListItem-radius": (theme) =>
+              theme.vars.radius.sm,
           }}
         >
+          {/* Dashboard */}
           {/* <ListItem>
-            <ListItemButton component={Link} href='/admin'>
+            <ListItemButton
+              component={Link}
+              href="/admin"
+              selected={pathname === "/admin"}
+            >
               <HomeRoundedIcon />
               <ListItemContent>
-                <Typography level="title-sm">Dashboard</Typography>
+                <Typography level="title-sm">
+                  Dashboard
+                </Typography>
               </ListItemContent>
             </ListItemButton>
           </ListItem> */}
+
+          {/* Reviews */}
           <ListItem>
-            <ListItemButton component={Link} href='/admin/review'>
-              <StarTwoTone  fill=''/>
+            <ListItemButton
+              component={Link}
+              href="/admin/review"
+              selected={isActive("/admin/review")}
+            >
+              <StarTwoTone />
               <ListItemContent>
-                <Typography level="title-sm">Reviews</Typography>
+                <Typography level="title-sm">
+                  Reviews
+                </Typography>
               </ListItemContent>
             </ListItemButton>
           </ListItem>
 
+          {/* Contact */}
           <ListItem>
-            <ListItemButton component={Link} href='/admin/contact'>
+            <ListItemButton
+              component={Link}
+              href="/admin/contact"
+              selected={isActive("/admin/contact")}
+            >
               <PermContactCalendarIcon />
               <ListItemContent>
-                <Typography level="title-sm">Contact</Typography>
+                <Typography level="title-sm">
+                  Contact
+                </Typography>
               </ListItemContent>
             </ListItemButton>
           </ListItem>
 
-          {/* <ListItem>
-            <ListItemButton component={Link} href='/admin/certificate'>
+          {/* Certificate */}
+          <ListItem>
+            <ListItemButton
+              component={Link}
+              href="/admin/certificate"
+              selected={isActive("/admin/certificate")}
+            >
               <WorkspacePremiumIcon />
               <ListItemContent>
-                <Typography level="title-sm">Certificate</Typography>
+                <Typography level="title-sm">
+                  Certificate
+                </Typography>
               </ListItemContent>
             </ListItemButton>
           </ListItem>
 
-          <ListItem nested>
+          {/* Courses Nested */}
+          {/* <ListItem nested>
             <Toggler
+              defaultExpanded={isCoursesActive}
               renderToggle={({ open, setOpen }) => (
-                <ListItemButton onClick={() => setOpen(!open)}>
+                <ListItemButton
+                  onClick={() => setOpen(!open)}
+                  selected={isCoursesActive}
+                >
                   <AssignmentRoundedIcon />
                   <ListItemContent>
-                    <Typography level="title-sm">Courses</Typography>
+                    <Typography level="title-sm">
+                      Courses
+                    </Typography>
                   </ListItemContent>
                   <KeyboardArrowDownIcon
-                    sx={[
-                      open
-                      ? {
-                          transform: 'rotate(180deg)',
-                        }
-                        : {
-                          transform: 'none',
-                        },
-                    ]}
+                    sx={{
+                      transform: open
+                        ? "rotate(180deg)"
+                        : "rotate(0deg)",
+                      transition: "0.2s",
+                    }}
                   />
                 </ListItemButton>
               )}
             >
               <List sx={{ gap: 0.5 }}>
                 <ListItem sx={{ mt: 0.5 }}>
-                  <ListItemButton component={Link} href='/admin/course-list'>Course List</ListItemButton>
+                  <ListItemButton
+                    component={Link}
+                    href="/admin/course-list"
+                    selected={isActive("/admin/course-list")}
+                  >
+                    Course List
+                  </ListItemButton>
                 </ListItem>
+
                 <ListItem>
-                  <ListItemButton component={Link} href='/admin/category-list'>Category List</ListItemButton>
+                  <ListItemButton
+                    component={Link}
+                    href="/admin/category-list"
+                    selected={isActive("/admin/category-list")}
+                  >
+                    Category List
+                  </ListItemButton>
                 </ListItem>
               </List>
             </Toggler>
           </ListItem> */}
         </List>
       </Box>
+
       <Divider />
-      <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
+
+      {/* User Section */}
+      <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
         <Avatar
           variant="outlined"
           size="sm"
           src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286"
         />
         <Box sx={{ minWidth: 0, flex: 1 }}>
-          <Typography level="title-sm">{admindata?.username ?? ""}</Typography>
-          <Typography level="body-xs">{admindata?.email ?? ""}</Typography>
+          <Typography level="title-sm">
+            {admindata?.username ?? ""}
+          </Typography>
+          <Typography level="body-xs">
+            {admindata?.email ?? ""}
+          </Typography>
         </Box>
-        <IconButton onClick={()=>{
-          logoutUser()
-        }} size="sm" variant="plain" color="neutral">
+        <IconButton
+          onClick={() => logoutUser()}
+          size="sm"
+          variant="plain"
+          color="neutral"
+        >
           <LogoutRoundedIcon />
         </IconButton>
       </Box>

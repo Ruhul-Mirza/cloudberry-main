@@ -15,6 +15,7 @@ import {
 
 import { Box, Button } from "@mui/joy";
 import VisibilityRoundedIcon from "@mui/icons-material/VisibilityRounded";
+import DynamicTitle from "@/components/DynamicTitle";
 
 export default function Page() {
   const [certificates, setCertificates] = useState([]);
@@ -66,7 +67,6 @@ export default function Page() {
       label: "Actions",
       width: 180,
       render: (row) => (
-        console.log( `${process.env.NEXT_PUBLIC_API_URL}/certificates/preview/${row}`,row),
         <Button
           size="sm"
           variant="soft"
@@ -119,7 +119,8 @@ export default function Page() {
 
   return (
     <>
-      <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 2 }}>
+     <Box sx={{ display: "flex", justifyContent:"space-between",alignItems:"center", mb: 2 }}>
+      <DynamicTitle/>
         <Button onClick={() => setAddModal(true)} disabled={loading}>
           Add Certificate
         </Button>
@@ -131,7 +132,7 @@ export default function Page() {
         loading={loading}
         showPagination
         itemsPerPage={10}
-        onEdit={(row) => setEditModal({ open: true, data: row })}
+        // onEdit={(row) => setEditModal({ open: true, data: row })}
         onDelete={(row) => setDeleteModal({ open: true, data: row })}
       />
 
@@ -142,7 +143,7 @@ export default function Page() {
         loading={loading}
       />
 
-      <EditModal
+      {/* <EditModal
         open={editModal.open}
         onClose={() => setEditModal({ open: false, data: null })}
         onSave={handleSaveEdit}
@@ -154,7 +155,7 @@ export default function Page() {
           { name: "end_date", label: "End Date", type: "date" }
         ]}
         data={editModal.data}
-      />
+      /> */}
 
       <DeleteModal
         open={deleteModal.open}

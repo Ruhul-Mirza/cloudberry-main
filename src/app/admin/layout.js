@@ -40,7 +40,6 @@ export default function AdminLayout({
           }}
         >
           {/* <DynamicBreadcrumb /> */}
-          <DynamicTitle />
           {children}
         </Box>
       </Box>

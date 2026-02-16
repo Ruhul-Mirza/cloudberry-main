@@ -17,6 +17,7 @@ import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
 import BlockIcon from "@mui/icons-material/Block";
 import AutorenewRoundedIcon from "@mui/icons-material/AutorenewRounded";
 import { Box, Button } from "@mui/joy";
+import DynamicTitle from "@/components/DynamicTitle";
 
 export default function Page() {
   // ================= STATES =================
@@ -163,8 +164,9 @@ export default function Page() {
   // ================= RENDER =================
   return (
     <>
-      <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 2 }}>
-        <Button onClick={() => setAddModal(true)} disabled={loading}>
+      <Box sx={{ display: "flex", justifyContent:"space-between",alignItems:"center", mb: 2 }}>
+        <DynamicTitle/>
+        <Button  onClick={() => setAddModal(true)} disabled={loading}>
           Add Review
         </Button>
       </Box>
