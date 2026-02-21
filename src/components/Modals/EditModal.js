@@ -31,7 +31,14 @@ export default function EditModal({
 
   useEffect(() => {
     if (open && data) {
-      setFormData(data);
+      const normalizedData = {
+        ...data,
+        category_id: data?.category_id
+          ? String(data.category_id)
+          : "",
+      };
+
+      setFormData(normalizedData);
       setErrors({});
     }
   }, [open, data]);
@@ -76,7 +83,7 @@ export default function EditModal({
       case 'switch':
         return (
           <Switch
-          className='mr-auto!' 
+            className='mr-auto!'
             checked={Boolean(formData[field.name])}
             onChange={(e) => handleChange(field.name, e.target.checked)}
             disabled={field.disabled}
@@ -99,11 +106,15 @@ export default function EditModal({
       case 'select':
         return (
           <Select
-            value={formData[field.name] ?? ''}
-            onChange={(e, value) => handleChange(field.name, value)}
-            disabled={field.disabled}
-            placeholder={field.placeholder}
-            color={hasError ? 'danger' : 'neutral'}
+            value={formData[field.name] ?? null}
+            onChange={(e, value) =>
+              handleChange(field.name, value ? String(value) : "")
+            }
+            disabled={field.disabled || field.loading}
+            placeholder={
+              field.loading ? "Loading..." : field.placeholder
+            }
+            color={hasError ? "danger" : "neutral"}
           >
             {field.options?.map((option) => (
               <Option key={option.value} value={option.value}>
@@ -171,7 +182,7 @@ export default function EditModal({
           {title}
         </Typography>
 
-        <Stack spacing={2} sx={{ mt: 2 }}>
+        <Stack spacing={2} sx={{ mt: 2 ,overflowY: 'auto', maxHeight: '70vh', pr: 1}}>
           {fields.map((field) => (
             <FormControl key={field.name} error={!!errors[field.name]}>
               <FormLabel>

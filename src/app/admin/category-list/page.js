@@ -114,6 +114,7 @@ export default function Page() {
 
   const handleSaveEdit = async (updatedData) => {
     setActionLoading(true);
+    setLoading(true);
     try {
       await updateCategory(editModal.data.id, updatedData);
       await fetchCategories();
@@ -121,15 +122,17 @@ export default function Page() {
     } catch (error) {
       console.error("Error updating category:", error);
     } finally {
+      setLoading(false);
       setActionLoading(false);
     }
   };
-
+  
   const handleRename = (row) => {
     setRenameModal({ open: true, data: row });
   };
-
+  
   const handleSaveRename = async (newName) => {
+    setLoading(true);
     setActionLoading(true);
     try {
       await updateCategory(renameModal.data.id, {
@@ -141,6 +144,7 @@ export default function Page() {
     } catch (error) {
       console.error("Error renaming category:", error);
     } finally {
+      setLoading(false);
       setActionLoading(false);
     }
   };
@@ -164,9 +168,9 @@ export default function Page() {
 
   return (
     <>
-    <DynamicTitle/>
       {/* ===== Header Add Button ===== */}
-      <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 2 }}>
+      <Box sx={{ display: "flex", justifyContent: "space-between", alignContent: "center", mb: 2 }}>
+        <DynamicTitle />
         <Button
           startDecorator="+"
           color="primary"

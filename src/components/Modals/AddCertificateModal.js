@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import {
   Modal,
   ModalDialog,
@@ -10,7 +10,11 @@ import {
   Option,
   FormControl,
   FormLabel,
-  FormHelperText
+  FormHelperText,
+  Textarea,
+  Typography,
+  Divider,
+  Sheet
 } from "@mui/joy";
 import { getCourses } from "@/services/courseApi";
 
@@ -24,16 +28,15 @@ export default function AddCertificateModal({
     student_name: "",
     course_id: "",
     start_date: "",
-    end_date: ""
+    end_date: "",
+    description_line1: "In recognition of successfully completing the",
+    description_line2: ""
   };
 
   const [form, setForm] = useState(initialState);
   const [errors, setErrors] = useState({});
   const [courses, setCourses] = useState([]);
   const [courseLoading, setCourseLoading] = useState(false);
-
-  const [showPreview, setShowPreview] = useState(false);
-  const [previewUrl, setPreviewUrl] = useState("");
 
   /* =================================
      FETCH COURSES
@@ -44,11 +47,10 @@ export default function AddCertificateModal({
     const fetchCourses = async () => {
       try {
         setCourseLoading(true);
-
         const res = await getCourses();
-        const courseArray = res?.data?.data?.[0] || [];
+        const courseArray = res?.data?.data || [];
 
-        const activeCourses = courseArray.filter(
+        const activeCourses = courseArray?.filter(
           (course) => course.status === "active"
         );
 
@@ -64,14 +66,12 @@ export default function AddCertificateModal({
   }, [open]);
 
   /* =================================
-     RESET WHEN CLOSED
+     RESET
   ================================= */
   useEffect(() => {
     if (!open) {
       setForm(initialState);
       setErrors({});
-      setShowPreview(false);
-      setPreviewUrl("");
     }
   }, [open]);
 
@@ -86,9 +86,6 @@ export default function AddCertificateModal({
     }
   };
 
-  /* =================================
-     COURSE SELECT CHANGE
-  ================================= */
   const handleCourseChange = (_, value) => {
     setForm({ ...form, course_id: value });
 
@@ -128,59 +125,42 @@ export default function AddCertificateModal({
     }
 
     setErrors(newErrors);
-
     return Object.keys(newErrors).length === 0;
   };
 
   /* =================================
-     PREVIEW HANDLER
+     PREVIEW DATA
   ================================= */
-  // const handlePreview = async () => {
-  //   if (!validate()) return;
+  const selectedCourseTitle = useMemo(() => {
+    const found = courses.find(
+      (c) => String(c.id) === String(form.course_id)
+    );
+    return found?.title || "Course Title";
+  }, [form.course_id, courses]);
 
-  //   try {
-  //     const res = await fetch(
-  //       `${process.env.NEXT_PUBLIC_API_URL}/certificates/preview-temp`,
-  //       {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           Authorization: "Bearer YOUR_ADMIN_JWT_TOKEN"
-  //         },
-  //         body: JSON.stringify(form)
-  //       }
-  //     );
-
-  //     const blob = await res.blob();
-  //     const url = URL.createObjectURL(blob);
-
-  //     setPreviewUrl(url);
-  //     setShowPreview(true);
-  //   } catch (err) {
-  //     console.error("Preview failed", err);
-  //   }
-  // };
+  const fullDescriptionPreview = useMemo(() => {
+    return `In recognition of successfully completing the "${selectedCourseTitle}" ${
+      form.description_line1 || ""
+    } ${form.description_line2 || ""}`.trim();
+  }, [selectedCourseTitle, form.description_line1, form.description_line2]);
 
   /* =================================
-     FINAL SUBMIT
+     SUBMIT
   ================================= */
   const handleSubmit = () => {
     if (!validate()) return;
 
     onCreate(form);
-    setShowPreview(false);
-    setPreviewUrl("");
   };
 
   return (
     <Modal open={open} onClose={onClose}>
-      <ModalDialog sx={{ width: 900 }}>
-        <h3>Add Certificate</h3>
+      <ModalDialog sx={{ width: 1000 }}>
+        <Typography level="h4">Add Certificate</Typography>
 
         {/* FORM */}
-        <div className="grid grid-cols-2 gap-4 mt-3">
+        <div className="grid grid-cols-2 gap-4 mt-4">
 
-          {/* STUDENT NAME */}
           <FormControl error={!!errors.student_name}>
             <FormLabel>Student Name</FormLabel>
             <Input
@@ -191,28 +171,24 @@ export default function AddCertificateModal({
             <FormHelperText>{errors.student_name}</FormHelperText>
           </FormControl>
 
-          {/* COURSE SELECT */}
           <FormControl error={!!errors.course_id}>
             <FormLabel>Course</FormLabel>
-
             <Select
-              placeholder={courseLoading ? "Loading courses..." : "Select Course"}
+              placeholder={courseLoading ? "Loading..." : "Select Course"}
               value={form.course_id || null}
               onChange={handleCourseChange}
               disabled={courseLoading}
             >
               {courses.map((course) => (
                 <Option key={course.id} value={course.id}>
+                  {console.log("Course in dropdown:", course)}
                   {course.title}
                 </Option>
               ))}
             </Select>
-
             <FormHelperText>{errors.course_id}</FormHelperText>
           </FormControl>
 
-
-          {/* START DATE */}
           <FormControl error={!!errors.start_date}>
             <FormLabel>Start Date</FormLabel>
             <Input
@@ -224,7 +200,6 @@ export default function AddCertificateModal({
             <FormHelperText>{errors.start_date}</FormHelperText>
           </FormControl>
 
-          {/* END DATE */}
           <FormControl error={!!errors.end_date}>
             <FormLabel>End Date</FormLabel>
             <Input
@@ -232,17 +207,68 @@ export default function AddCertificateModal({
               name="end_date"
               value={form.end_date}
               onChange={handleChange}
+              slotProps={{ input: { min: form.start_date || "", max: new Date().toISOString().split("T")[0], }, }}
             />
             <FormHelperText>{errors.end_date}</FormHelperText>
           </FormControl>
+
+          {/* DESCRIPTION LINE 1 */}
+          <FormControl>
+            <FormLabel>Description Line 1</FormLabel>
+            <Textarea
+              name="description_line1"
+              value={form.description_line1}
+              onChange={handleChange}
+              minRows={2}
+            />
+          </FormControl>
+
+          {/* DESCRIPTION LINE 2 */}
+          <FormControl>
+            <FormLabel>Description Line 2</FormLabel>
+            <Textarea
+              name="description_line2"
+              value={form.description_line2}
+              onChange={handleChange}
+              minRows={2}
+            />
+          </FormControl>
         </div>
 
-        {/* ACTIONS */}
-        <div className="flex justify-end gap-2 mt-4">
-          {/* <Button variant="soft" onClick={handlePreview}>
-            Preview Certificate
-          </Button> */}
+        <Divider sx={{ my: 4 }} />
 
+        {/* LIVE DESCRIPTION PREVIEW */}
+        <Typography level="h5" mb={2}>
+          Description Preview
+        </Typography>
+
+        <Sheet
+          variant="soft"
+          sx={{
+            p: 3,
+            borderRadius: "md",
+            backgroundColor: "#f8f9fb"
+          }}
+        >
+          <Typography level="body-lg" sx={{ fontStyle: "italic" }}>
+          {form.description_line1 && (
+            <Typography mt={1}>
+              {form.description_line1}
+            </Typography>
+          )}
+            <b>"{selectedCourseTitle}"</b>
+          {form.description_line2 && (
+            <Typography mt={1}>
+              {form.description_line2}
+            </Typography>
+          )}
+          </Typography>
+
+
+        </Sheet>
+
+        {/* ACTIONS */}
+        <div className="flex justify-end gap-2 mt-6">
           <Button
             color="primary"
             loading={loading}
@@ -251,16 +277,6 @@ export default function AddCertificateModal({
             Confirm & Create
           </Button>
         </div>
-
-        {/* PDF PREVIEW */}
-        {showPreview && (
-          <div className="mt-4 border rounded overflow-hidden">
-            <iframe
-              src={previewUrl}
-              className="w-full h-[500px]"
-            />
-          </div>
-        )}
       </ModalDialog>
     </Modal>
   );
