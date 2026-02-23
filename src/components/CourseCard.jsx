@@ -7,7 +7,6 @@ import Link from "next/link";
 const CourseCard = ({ course, index }) => {
   const oldPrice = parseFloat(course.old_price);
   const newPrice = parseFloat(course.new_price);
-  console.log(course, "Course Here");
 
   const isActive = course.status === "active";
   const discountPercent =

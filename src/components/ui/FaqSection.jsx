@@ -112,7 +112,7 @@ export default function FaqSection() {
         Still have questions?{" "}
         <a
           href="#contact"
-          className="text-blue-400 hover:text-blue-300 font-medium underline-offset-4 hover:underline"
+          className="text-white hover:text-white-300 font-medium underline-offset-4 hover:underline"
         >
           Contact our support
         </a>
@@ -120,8 +120,8 @@ export default function FaqSection() {
       </div>
 
       {/* Ambient Background Glow */}
-      <div className="absolute top-10 left-[5%] w-64 h-64 bg-blue-500/20 rounded-full blur-[120px] -z-10"></div>
-      <div className="absolute bottom-10 right-[10%] w-72 h-72 bg-purple-600/20 rounded-full blur-[120px] -z-10"></div>
+      <div className="absolute top-10 left-[5%] w-64 h-64 bg-black-500/20 rounded-full blur-[120px] -z-10"></div>
+      <div className="absolute bottom-10 right-[10%] w-72 h-72 bg-gray-600/20 rounded-full blur-[120px] -z-10"></div>
       <div className="absolute top-1/3 right-[30%] w-96 h-96 bg-white/5 rounded-full blur-[160px] -z-10"></div>
     </section>
   );

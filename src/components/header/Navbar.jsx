@@ -84,7 +84,7 @@ function Navbar() {
 
   return (
     <>
-      <nav className="bg-transparent relative z-12">
+      <nav className=" relative z-12 bg-black">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}

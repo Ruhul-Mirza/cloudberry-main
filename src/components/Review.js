@@ -1,42 +1,26 @@
-"use client"
-import { useRef, useState, useCallback } from "react";
+"use client";
+import { useRef, useState, useCallback, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import Tooltip from "@mui/material/Tooltip";
-import { ArrowLeft, ArrowRight, Play } from "lucide-react";
+import { ArrowLeft, ArrowRight, Play, Star } from "lucide-react";
 import "swiper/css";
 
-const testimonials = [
-  {
-    id: 1,
-    name: "Nikhil YN",
-    role: "Software Engineer",
-    story:
-      "Got 2 job offers with a 400% salary hike after switching careers.asdjaskdhasuhdgauh sdjnasbuhabsuhfbahudsbfjn adsuyasgfiasdjbnf asduyfgaubsahugfyds fnasdfbyuagd",
-    video: "https://www.youtube.com/embed/j0hBoqOVVFk",
-  },
-  {
-    id: 2,
-    name: "Herin Wilson",
-    role: "IT Associate",
-    story: "Transitioned",
-    video: "https://www.youtube.com/embed/PxIRMaJMOjY",
-  },
-  {
-    id: 3,
-    name: "Ayush Shah",
-    role: "Data Analyst",
-    story: "Landed a dream job as a fresher in a top MNC.",
-    video: "https://www.youtube.com/embed/sPM2MJyF6xo",
-  },
-  {
-    id: 4,
-    name: "Somika Simlote",
-    role: "Sr. Engg at Persistent Systems",
-    story: "Became financially independent after upskilling.",
-    video: "https://www.youtube.com/embed/BzhcQuYVWYo",
-  },
-];
+const StarRating = ({ rating }) => {
+  const filled = Number(rating);
+  return (
+    <div className="flex items-center gap-0.5">
+      {[1, 2, 3, 4, 5].map((star) => (
+        <Star
+          key={star}
+          className="w-4 h-4"
+          fill={star <= filled ? "#f59e0b" : "none"}
+          stroke={star <= filled ? "#f59e0b" : "#d1d5db"}
+        />
+      ))}
+    </div>
+  );
+};
 
 const TestimonialCard = ({ testimonial, isPlaying, onPlay }) => {
   const getVideoThumbnail = (videoUrl) => {
@@ -51,8 +35,8 @@ const TestimonialCard = ({ testimonial, isPlaying, onPlay }) => {
         <div className="absolute bottom-0 right-0 w-12 h-12 border-r-2 border-b-2 border-foreground rounded-br-3xl" />
       </div>
 
-      <div className="relative h-full bg-card border border-border rounded-3xl p-4 shadow-sm grid grid-rows-[auto_1fr_auto]">
-        <div className="relative w-full h-[220px] rounded-2xl overflow-hidden bg-muted">
+      <div className="relative h-full bg-card border border-border rounded-sm p-4 shadow-sm grid grid-rows-[auto_1fr_auto]">
+        <div className="relative w-full h-[220px] rounded-sm overflow-hidden bg-muted">
           {isPlaying ? (
             <iframe
               src={`${testimonial.video}?autoplay=1&rel=0`}
@@ -111,9 +95,7 @@ const TestimonialCard = ({ testimonial, isPlaying, onPlay }) => {
 
           <div className="flex-1">
             <p className="font-semibold text-sm">{testimonial.name}</p>
-            <p className="text-xs text-muted-foreground line-clamp-1">
-              {testimonial.role}
-            </p>
+            <StarRating rating={testimonial.rating} />
           </div>
         </div>
       </div>
@@ -121,25 +103,73 @@ const TestimonialCard = ({ testimonial, isPlaying, onPlay }) => {
   );
 };
 
+const extractYouTubeId = (url) => {
+  if (!url) return "";
+  const shortMatch = url.match(/youtu\.be\/([^?&]+)/);
+  if (shortMatch) return shortMatch[1];
+  const shortsMatch = url.match(/shorts\/([^?&]+)/);
+  if (shortsMatch) return shortsMatch[1];
+  const watchMatch = url.match(/[?&]v=([^?&]+)/);
+  if (watchMatch) return watchMatch[1];
+  const embedMatch = url.match(/embed\/([^?&]+)/);
+  if (embedMatch) return embedMatch[1];
+  return url;
+};
+
 const Reviews = () => {
   const swiperRef = useRef(null);
   const [playingVideo, setPlayingVideo] = useState(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [testimonials, setTestimonials] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  // SOLUTION: Duplicate slides if there are fewer than 8 to satisfy loop requirements 
-  // and prevent the Swiper warning.
-  const displayTestimonials = testimonials.length < 8 
-    ? [...testimonials, ...testimonials] 
-    : testimonials;
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
+  useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const res = await fetch(`${API_URL}/reviews`);
+        const json = await res.json();
+
+        const reviews = json?.data?.[0] || [];
+
+        const formatted = reviews.map((item) => ({
+          id: item.id,
+          name: item.student_name,
+          rating: parseInt(item.rating, 10),
+          story: item.message,
+          video: `https://www.youtube.com/embed/${extractYouTubeId(item.youtube_embed)}`,
+        }));
+
+        setTestimonials(formatted);
+      } catch (err) {
+        console.error("Failed to fetch reviews", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchReviews();
+  }, []);
+
+  const displayTestimonials =
+    testimonials.length < 8 ? [...testimonials, ...testimonials] : testimonials;
 
   const handlePrev = useCallback(() => {
     swiperRef.current?.slidePrev();
   }, []);
 
   const handleNext = useCallback(() => {
-    console.log("next")
     swiperRef.current?.slideNext();
   }, []);
+
+  if (loading) {
+    return (
+      <section className="bg-gray-50 py-16 md:py-24 flex items-center justify-center">
+        <p className="text-muted-foreground text-sm">Loading testimonials...</p>
+      </section>
+    );
+  }
 
   return (
     <section className="bg-gray-50 py-16 md:py-24 overflow-hidden">
@@ -174,6 +204,7 @@ const Reviews = () => {
             </button>
           </div>
         </div>
+
         <Swiper
           className="items-stretch"
           onSwiper={(swiper) => (swiperRef.current = swiper)}
@@ -199,7 +230,10 @@ const Reviews = () => {
           }}
         >
           {displayTestimonials.map((testimonial, idx) => (
-            <SwiperSlide key={`${testimonial.id}-${idx}`} className="h-auto flex">
+            <SwiperSlide
+              key={`${testimonial.id}-${idx}`}
+              className="h-auto flex"
+            >
               <TestimonialCard
                 testimonial={testimonial}
                 index={idx}

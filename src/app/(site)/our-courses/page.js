@@ -13,7 +13,7 @@ export default function OurCourses() {
         eyebrow="Our Courses"
         title="Learn with clarity"
         subtitle="Structured learning for long-term mastery"
-        cardTitle="Courses built on depth, not shortcuts"
+        cardTitle="About Our Courses"
         cardDescription="lorem500 ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. lorem500 ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. lorem500 ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. lorem500 ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.lorem500 ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
         ctaText="Enroll Now"
         imageSrc={logo}

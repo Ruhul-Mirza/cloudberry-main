@@ -1,160 +1,26 @@
-export const courses =     [
-      {
-        "id": "12",
-        "title": "Full Stack Development",
-        "description": "",
-        "price": "2000.00",
-        "category_id": "8",
-        "status": "active",
-        "created_at": "2026-01-26T03:13:18.185Z",
-        "updated_at": "2026-01-26T03:13:18.185Z",
-        "category_name": "Development",
-        "old_price": "2000.00",
-        "new_price": "1000"
-      },
-      {
-        "id": "11",
-        "title": "222",
-        "description": "ssdd",
-        "price": "2.00",
-        "category_id": "3",
-        "status": "active",
-        "created_at": "2026-01-25T11:12:07.772Z",
-        "updated_at": "2026-01-25T11:12:07.772Z",
-        "category_name": "Development",
-        "old_price": null,
-        "new_price": null
-      },
-      {
-        "id": "10",
-        "title": "Demo10",
-        "description": "",
-        "price": "2222.00",
-        "category_id": "3",
-        "status": "active",
-        "created_at": "2026-01-25T11:11:58.322Z",
-        "updated_at": "2026-01-25T11:11:58.322Z",
-        "category_name": "Development",
-        "old_price": null,
-        "new_price": null
-      },
-      {
-        "id": "9",
-        "title": "demo9",
-        "description": "",
-        "price": "2333.00",
-        "category_id": "3",
-        "status": "active",
-        "created_at": "2026-01-25T11:11:44.892Z",
-        "updated_at": "2026-01-25T11:11:44.892Z",
-        "category_name": "Testing",
-        "old_price": null,
-        "new_price": null
-      },
-      {
-        "id": "8",
-        "title": "Demo7",
-        "description": "",
-        "price": "2222.00",
-        "category_id": "3",
-        "status": "active",
-        "created_at": "2026-01-25T11:11:28.433Z",
-        "updated_at": "2026-01-25T11:11:28.433Z",
-        "category_name": "Testing",
-        "old_price": "2222.00",
-        "new_price": "1500.00"
-      },
-      {
-        "id": "7",
-        "title": "Demo6",
-        "description": "",
-        "price": "2222.00",
-        "category_id": "3",
-        "status": "active",
-        "created_at": "2026-01-25T11:11:10.809Z",
-        "updated_at": "2026-01-25T11:11:10.809Z",
-        "category_name": "Testing",
-        "old_price": null,
-        "new_price": null
-      },
-      {
-        "id": "6",
-        "title": "demo5",
-        "description": "",
-        "price": "2322.00",
-        "category_id": "2",
-        "status": "inactive",
-        "created_at": "2026-01-25T11:10:56.582Z",
-        "updated_at": "2026-01-25T11:10:56.582Z",
-        "category_name": "AI",
-        "old_price": null,
-        "new_price": null
-      },
-      {
-        "id": "5",
-        "title": "Demo4",
-        "description": "",
-        "price": "22222.00",
-        "category_id": "3",
-        "status": "active",
-        "created_at": "2026-01-25T11:10:34.821Z",
-        "updated_at": "2026-01-25T11:10:34.821Z",
-        "category_name": "AI",
-        "old_price": "22222.00",
-        "new_price": "15000.00"
-      },
-      {
-        "id": "4",
-        "title": "demo3",
-        "description": "",
-        "price": "3333.00",
-        "category_id": "3",
-        "status": "active",
-        "created_at": "2026-01-25T11:10:00.250Z",
-        "updated_at": "2026-01-25T11:10:00.250Z",
-        "category_name": "AI",
-        "old_price": null,
-        "new_price": null
-      },
-      {
-        "id": "3",
-        "title": "Demo2",
-        "description": "",
-        "price": "1111.00",
-        "category_id": "2",
-        "status": "active",
-        "created_at": "2026-01-25T11:09:44.576Z",
-        "updated_at": "2026-01-25T11:09:44.576Z",
-        "category_name": "Designing",
-        "old_price": null,
-        "new_price": null
-      },
-      {
-        "id": "2",
-        "title": "Demos",
-        "description": "1",
-        "price": "1111.00",
-        "category_id": "2",
-        "status": "active",
-        "created_at": "2026-01-25T11:04:25.209Z",
-        "updated_at": "2026-01-25T11:04:25.209Z",
-        "category_name": "Designing",
-        "old_price": null,
-        "new_price": null
-      },
-      {
-        "id": "1",
-        "title": "aaaa",
-        "description": "",
-        "price": "1222.00",
-        "category_id": "3",
-        "status": "inactive",
-        "created_at": "2026-01-25T10:55:41.706Z",
-        "updated_at": "2026-01-25T10:55:41.706Z",
-        "category_name": "Designing",
-        "old_price": "1222.00",
-        "new_price": "1000.00"
-      }
+export const demoData =     [
+        {
+            "id": "3",
+            "title": "Demo2",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+            "price": "1111.00",
+            "category_id": "2",
+            "status": "active",
+            "created_at": "2026-01-25T11:09:44.576Z",
+            "discount_available": true,
+            "updated_at": "2026-01-25T11:09:44.576Z",
+            "duration": "2 months",
+            "feature_bullet_points": [
+                "Feature 1",
+                "Feature 2",
+                "Feature 3"
+            ],
+            "category_name": "Sayed Hasan",
+            "old_price": "1111.00",
+            "new_price": "999.00",
+            "discount_amount": "112.00",
+        }
+
     ]
 // export const courses = [
 //   {

@@ -10,7 +10,6 @@ import WhyUs from "@/components/ui/WhyUs";
 import HeroSectionHome from "@/components/HeroSectionHome";
 import Reviews from "@/components/Review";
 import WhoWeAre from "@/components/ui/WhoWeAre";
-import Header from "@/components/header/Header";
 import ComparisonSection from "@/components/ui/ComparisonSection";
 import LinkedInReviewsSlider from "@/components/LinkedInReviews"; 
 export default function Home() {

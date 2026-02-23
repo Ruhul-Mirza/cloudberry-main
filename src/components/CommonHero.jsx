@@ -13,7 +13,7 @@ export default function CommonHero({
   imageSrc, // optional
 }) {
   return (
-    <section className="relative overflow-hidden bg-[#faf9f7]">
+    <section className="relative overflow-hidden -mt-10 bg-[#faf9f7]">
       {/* concentric background */}
       <div className="pointer-events-none absolute inset-0 flex  md:-top-30 justify-center">
         <div
@@ -66,41 +66,26 @@ export default function CommonHero({
             {/* Text */}
             <div className="flex flex-col items-center text-center max-w-xl">
               <div>
-                <h2 className="font-geist text-2xl font-medium text-foreground">
+                <h2 className="font-geist text-4xl font-semibold text-foreground">
                   {cardTitle}
                 </h2>
 
-                <Tooltip
-                  title={cardDescription}
-                  arrow
-                  placement="bottom"
-                  componentsProps={{
-                    tooltip: {
-                      sx: {
-                        fontSize: "0.75rem",
-                        lineHeight: 1.4,
-                        maxWidth: 260,
-                      },
-                    },
-                  }}
-                >
-                  <p
-                    className="
+                <p
+                  className="
       mt-4
-      text-sm
+      text-md
       leading-relaxed
       text-muted-foreground
       line-clamp-3
       cursor-help
     "
-                  >
-                    {cardDescription}
-                  </p>
-                </Tooltip>
+                >
+                  {cardDescription}
+                </p>
               </div>
 
               {ctaText && (
-                <button className="mt-6 w-fit rounded-sm bg-foreground px-5 py-2 text-sm text-background hover:opacity-90 transition">
+                <button className="mt-6 md:mt-10 w-fit rounded-sm bg-foreground px-5 py-2 text-sm text-background hover:opacity-90 transition">
                   {ctaText}
                 </button>
               )}
