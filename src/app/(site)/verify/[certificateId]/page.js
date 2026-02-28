@@ -3,30 +3,18 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import {
-  Box,
-  Card,
-  Typography,
-  CircularProgress,
-  Alert,
-  Button,
-  Chip,
-  Sheet,
-  Stack,
-  Divider,
-  Skeleton,
-} from "@mui/joy";
-import CheckCircleRoundedIcon from "@mui/icons-material/CheckCircleRounded";
-import DownloadRoundedIcon from "@mui/icons-material/DownloadRounded";
-import CalendarTodayRoundedIcon from "@mui/icons-material/CalendarTodayRounded";
-import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
-import SchoolRoundedIcon from "@mui/icons-material/SchoolRounded";
-import VerifiedUserRoundedIcon from "@mui/icons-material/VerifiedUserRounded";
-import ShareRoundedIcon from "@mui/icons-material/ShareRounded";
+  CheckCircle,
+  Calendar,
+  User,
+  GraduationCap,
+  ShieldCheck,
+  Download,
+  Share2,
+} from "lucide-react";
 
-// Date formatting function
+/* ===== DATE FORMAT (UNCHANGED LOGIC) ===== */
 const formatDate = (dateString) => {
   if (!dateString) return "N/A";
-  
   try {
     const date = new Date(dateString);
     return new Intl.DateTimeFormat("en-US", {
@@ -34,25 +22,39 @@ const formatDate = (dateString) => {
       month: "long",
       day: "numeric",
     }).format(date);
-  } catch (error) {
+  } catch {
     return dateString;
   }
 };
 
 export default function VerifyCertificate() {
   const { certificateId } = useParams();
+
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [courses, setCourses] = useState([]);
 
   useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/certificates/verify/${certificateId}`)
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/courses`)
       .then((res) => res.json())
       .then((result) => {
-        console.log(result?.data?.[0]?.[0]);
+        const list = Array.isArray(result?.data) ? result.data : [];
+        setCourses(list);
+      })
+      .catch(() => {});
+  }, []);
+  /* ===== FETCH LOGIC (UNCHANGED) ===== */
+  useEffect(() => {
+    fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/certificates/verify/${certificateId}`,
+    )
+      .then((res) => res.json())
+      .then((result) => {
         if (!result.success) {
           setError(result.message);
         } else {
+          (console.log(result?.data?.[0]?.[0]), "checkinf");
           setData(result?.data?.[0]?.[0]);
         }
         setLoading(false);
@@ -63,365 +65,148 @@ export default function VerifyCertificate() {
       });
   }, [certificateId]);
 
+  /* ===== LOADING UI ===== */
   if (loading) {
     return (
-      <Box
-        sx={{
-          minHeight: "100vh",
-          bgcolor: "#f8f9fa",
-          py: { xs: 3, md: 6 },
-          px: { xs: 2, md: 4 },
-        }}
-      >
-        <Box sx={{ maxWidth: 1200, mx: "auto" }}>
-          {/* Header Skeleton */}
-          <Card
-            variant="outlined"
-            sx={{
-              mb: 3,
-              borderLeft: "4px solid",
-              borderLeftColor: "success.500",
-              bgcolor: "white",
-              boxShadow: "0 2px 8px rgba(0, 0, 0, 0.08)",
-            }}
-          >
-            <Stack direction="row" spacing={2} alignItems="center">
-              <Skeleton variant="circular" width={40} height={40} />
-              <Box sx={{ flex: 1 }}>
-                <Skeleton variant="text" width="40%" height={32} sx={{ mb: 1 }} />
-                <Skeleton variant="text" width="60%" height={20} />
-              </Box>
-              <Skeleton variant="rectangular" width={100} height={36} sx={{ borderRadius: "lg" }} />
-            </Stack>
-          </Card>
-
-          {/* Details Skeleton */}
-          <Card
-            variant="outlined"
-            sx={{
-              mb: 3,
-              bgcolor: "white",
-              boxShadow: "0 2px 8px rgba(0, 0, 0, 0.08)",
-            }}
-          >
-            <Skeleton variant="text" width="30%" height={28} sx={{ mb: 3 }} />
-            <Stack spacing={2.5}>
-              {[1, 2, 3, 4].map((i) => (
-                <Box key={i}>
-                  <Stack direction="row" spacing={2} alignItems="flex-start">
-                    <Skeleton variant="circular" width={20} height={20} sx={{ mt: 0.5 }} />
-                    <Box sx={{ flex: 1 }}>
-                      <Skeleton variant="text" width="30%" height={18} sx={{ mb: 0.5 }} />
-                      <Skeleton variant="text" width="50%" height={24} />
-                    </Box>
-                  </Stack>
-                  {i < 4 && <Divider sx={{ mt: 2.5 }} />}
-                </Box>
-              ))}
-            </Stack>
-          </Card>
-
-          {/* Preview Skeleton */}
-          <Card
-            variant="outlined"
-            sx={{
-              mb: 3,
-              bgcolor: "white",
-              boxShadow: "0 2px 8px rgba(0, 0, 0, 0.08)",
-            }}
-          >
-            <Skeleton variant="text" width="30%" height={28} sx={{ mb: 2 }} />
-            <Skeleton variant="rectangular" width="100%" height={600} sx={{ borderRadius: "sm" }} />
-          </Card>
-
-          {/* Action Button Skeleton */}
-          <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2 }}>
-            <Skeleton variant="rectangular" width={120} height={48} sx={{ borderRadius: "lg" }} />
-            <Skeleton variant="rectangular" width={220} height={48} sx={{ borderRadius: "lg" }} />
-          </Box>
-        </Box>
-      </Box>
+      <div className="min-h-screen bg-gray-50 p-4 md:p-8">
+        <div className="max-w-5xl mx-auto space-y-4 animate-pulse">
+          <div className="h-24 bg-white rounded-xl border" />
+          <div className="h-72 bg-white rounded-xl border" />
+          <div className="h-[500px] bg-white rounded-xl border" />
+        </div>
+      </div>
     );
   }
 
-  if (error)
+  /* ===== ERROR UI ===== */
+  if (error) {
     return (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          minHeight: "100vh",
-          bgcolor: "#f8f9fa",
-          p: 3,
-        }}
-      >
-        <Card
-          variant="outlined"
-          sx={{
-            maxWidth: 500,
-            bgcolor: "white",
-            boxShadow: "0 2px 8px rgba(0, 0, 0, 0.08)",
-          }}
-        >
-          <Alert
-            color="danger"
-            variant="soft"
-            sx={{
-              border: "none",
-              bgcolor: "transparent",
-            }}
-          >
-            <Typography level="title-md" sx={{ mb: 1 }}>
-              Verification Failed
-            </Typography>
-            <Typography level="body-sm">{error}</Typography>
-          </Alert>
-        </Card>
-      </Box>
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+        <div className="bg-white border rounded-xl p-6 max-w-md w-full">
+          <h2 className="text-lg font-semibold text-red-600 mb-2">
+            Verification Failed
+          </h2>
+          <p className="text-gray-600 text-sm">{error}</p>
+        </div>
+      </div>
     );
+  }
 
+  /* ===== MAIN UI ===== */
+  const matchedCourse = courses.find(
+    (c) => String(c.id) === String(data?.course_id),
+  );
   return (
-    <Box
-      sx={{
-        minHeight: "100vh",
-        bgcolor: "#f8f9fa",
-        py: { xs: 3, md: 6 },
-        px: { xs: 2, md: 4 },
-      }}
-    >
-      <Box sx={{ maxWidth: 1200, mx: "auto" }}>
-        {/* Header Card */}
-        <Card
-          variant="outlined"
-          sx={{
-            mb: 3,
-            borderLeft: "4px solid",
-            borderLeftColor: "success.500",
-            bgcolor: "white",
-            boxShadow: "0 2px 8px rgba(0, 0, 0, 0.08)",
-            transition: "transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out",
-            "&:hover": {
-              transform: "translateY(-2px)",
-              boxShadow: "0 4px 12px rgba(0, 0, 0, 0.12)",
-            },
-          }}
-        >
-          <Stack direction="row" spacing={2} alignItems="center" flexWrap="wrap">
-            <Box
-              sx={{
-                p: 1,
-                borderRadius: "50%",
-                bgcolor: "success.50",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <CheckCircleRoundedIcon
-                sx={{ fontSize: 40, color: "success.500" }}
-              />
-            </Box>
-            <Box sx={{ flex: 1, minWidth: 200 }}>
-              <Typography level="h2" sx={{ mb: 0.5, fontWeight: 700 }}>
+    <div className="min-h-screen bg-gray-50 py-6 md:py-10 px-3 md:px-6">
+      <div className="max-w-5xl mx-auto space-y-4">
+        {/* HEADER */}
+        <div className="bg-white border rounded p-5 shadow-sm">
+          <div className="flex flex-wrap items-center gap-4">
+            <div className="p-3 rounded-full bg-green-100">
+              <CheckCircle className="text-green-600 w-8 h-8" />
+            </div>
+
+            <div className="flex-1 min-w-[200px]">
+              <h1 className="text-xl md:text-2xl font-bold">
                 Certificate Verified
-              </Typography>
-              <Typography level="body-sm" sx={{ color: "text.secondary" }}>
-                This certificate is authentic and has been verified successfully
-              </Typography>
-            </Box>
-            <Box sx={{ ml: { sm: "auto" } }}>
-              <Chip
-                color="success"
-                variant="soft"
-                size="lg"
-                startDecorator={<VerifiedUserRoundedIcon />}
-                sx={{
-                  fontWeight: 600,
-                  px: 2.5,
-                  py: 1,
-                }}
-              >
-                Verified
-              </Chip>
-            </Box>
-          </Stack>
-        </Card>
+              </h1>
+              <p className="text-sm text-gray-500">
+                This certificate is authentic and verified successfully.
+              </p>
+            </div>
 
-        {/* Certificate Details */}
-        <Card
-          variant="outlined"
-          sx={{
-            mb: 3,
-            bgcolor: "white",
-            boxShadow: "0 2px 8px rgba(0, 0, 0, 0.08)",
-          }}
-        >
-          <Typography
-            level="title-lg"
-            sx={{
-              mb: 3,
-              fontWeight: 700,
-              fontSize: "1.5rem",
-            }}
-          >
-            Certificate Details
-          </Typography>
+            <span className="inline-flex items-center gap-2 bg-green-100 text-green-700 px-3 py-1.5 rounded-full text-sm font-medium">
+              <ShieldCheck size={16} />
+              Verified
+            </span>
+          </div>
+        </div>
 
-          <Stack spacing={2.5}>
+        {/* DETAILS */}
+        <div className="bg-white border rounded p-5 shadow-sm">
+          <h2 className="text-lg font-semibold mb-5">Certificate Details</h2>
+
+          <div className="space-y-4">
             <InfoRow
-              icon={<PersonRoundedIcon />}
+              icon={<User size={18} />}
               label="Student Name"
               value={data.student_name}
             />
-            <Divider />
             <InfoRow
-              icon={<SchoolRoundedIcon />}
+              icon={<GraduationCap size={18} />}
               label="Course"
-              value={data.course_title}
+              value={matchedCourse?.title || "N/A"}
             />
-            <Divider />
-            <Box
-              sx={{
-                display: "grid",
-                gridTemplateColumns: { xs: "1fr", sm: "1fr 1fr" },
-                gap: 2.5,
-              }}
-            >
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <InfoRow
-                icon={<CalendarTodayRoundedIcon />}
+                icon={<Calendar size={18} />}
                 label="Start Date"
                 value={formatDate(data.start_date)}
               />
               <InfoRow
-                icon={<CalendarTodayRoundedIcon />}
+                icon={<Calendar size={18} />}
                 label="End Date"
                 value={formatDate(data.end_date)}
               />
-            </Box>
-            <Divider />
+            </div>
+
             <InfoRow
-              icon={<CalendarTodayRoundedIcon />}
+              icon={<Calendar size={18} />}
               label="Issued On"
               value={formatDate(data.created_at)}
             />
-          </Stack>
-        </Card>
+          </div>
+        </div>
 
-        {/* PDF Preview */}
-        <Card
-          variant="outlined"
-          sx={{
-            mb: 3,
-            bgcolor: "white",
-            boxShadow: "0 2px 8px rgba(0, 0, 0, 0.08)",
-          }}
-        >
-          <Typography
-            level="title-lg"
-            sx={{
-              mb: 2,
-              fontWeight: 700,
-              fontSize: "1.5rem",
-            }}
-          >
-            Certificate Preview
-          </Typography>
-          <Sheet
-            variant="outlined"
-            sx={{
-              borderRadius: "sm",
-              overflow: "hidden",
-              bgcolor: "background.surface",
-              border: "1px solid rgba(0, 0, 0, 0.08)",
-              boxShadow: "inset 0 2px 8px rgba(0, 0, 0, 0.05)",
-            }}
-          >
+        {/* PREVIEW */}
+        <div className="bg-white border rounded p-5 shadow-sm">
+          <h2 className="text-xl font-semibold mb-3">Certificate Preview</h2>
+
+          <div className="overflow-hidden rounded border">
             <iframe
               src={`${process.env.NEXT_PUBLIC_API_URL}/certificates/preview/${certificateId}`}
-              style={{
-                width: "100%",
-                height: "600px",
-                border: "none",
-                display: "block",
-              }}
+              className="w-full h-[600px]"
               title="Certificate Preview"
             />
-          </Sheet>
-        </Card>
+          </div>
+        </div>
 
-        {/* Actions */}
-        <Box sx={{ display: "flex", justifyContent: "flex-end", gap: 2, flexWrap: "wrap" }}>
-          <Button
-            variant="outlined"
-            size="lg"
-            startDecorator={<ShareRoundedIcon />}
-            sx={{
-              px: 4,
-              fontWeight: 500,
-            }}
-          >
-            Share
-          </Button>
-          <Button
-            component="a"
+        {/* ACTIONS */}
+        <div className="flex flex-wrap justify-end gap-3">
+          {/* <button className="border rounded-lg px-5 py-2.5 text-sm font-medium hover:bg-gray-100 transition">
+            <span className="inline-flex items-center gap-2">
+              <Share2 size={16} />
+              Share
+            </span>
+          </button> */}
+
+          <a
             href={`${process.env.NEXT_PUBLIC_API_URL}/certificates/preview/${certificateId}`}
             target="_blank"
-            size="lg"
-            startDecorator={<DownloadRoundedIcon />}
-            sx={{
-              px: 4,
-              fontWeight: 600,
-              transition: "all 0.2s ease-in-out",
-              "&:hover": {
-                transform: "translateY(-2px)",
-              },
-            }}
+            className="bg-black text-white rounded px-5 py-2.5 text-sm font-semibold hover:bg-black/90 transition inline-flex items-center gap-2"
           >
+            <Download size={16} />
             Download Certificate
-          </Button>
-        </Box>
-      </Box>
-    </Box>
+          </a>
+        </div>
+      </div>
+    </div>
   );
 }
 
+/* ===== INFO ROW ===== */
 function InfoRow({ icon, label, value }) {
   return (
-    <Stack direction="row" spacing={2} alignItems="flex-start">
-      <Box
-        sx={{
-          color: "primary.500",
-          mt: 0.5,
-          fontSize: 20,
-          p: 1,
-          borderRadius: "md",
-          bgcolor: "primary.50",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        {icon}
-      </Box>
-      <Box sx={{ flex: 1 }}>
-        <Typography
-          level="body-sm"
-          sx={{
-            color: "text.secondary",
-            mb: 0.5,
-            textTransform: "uppercase",
-            letterSpacing: "0.5px",
-            fontSize: "0.75rem",
-            fontWeight: 600,
-          }}
-        >
+    <div className="flex gap-3">
+      <div className="p-2 bg-gray-100 rounded-md text-gray-700">{icon}</div>
+      <div>
+        <p className="text-xs uppercase tracking-wide text-gray-500 font-semibold">
           {label}
-        </Typography>
-        <Typography level="title-md" sx={{ fontWeight: 600, fontSize: "1.1rem" }}>
-          {value}
-        </Typography>
-      </Box>
-    </Stack>
+        </p>
+        <p className="text-sm md:text-base font-semibold text-gray-900">
+          {value || "N/A"}
+        </p>
+      </div>
+    </div>
   );
 }

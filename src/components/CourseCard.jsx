@@ -1,12 +1,11 @@
 "use client";
-import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { ArrowUpRight, Clock, Tag, Users } from "lucide-react";
+import { ArrowUpRight, Clock, Tag } from "lucide-react";
 import Link from "next/link";
 
 const CourseCard = ({ course, index }) => {
   const oldPrice = parseFloat(course.old_price);
-  const newPrice = parseFloat(course.new_price);
+  const newPrice = parseFloat(course.new_price) || parseFloat(course.price);
 
   const isActive = course.status === "active";
   const discountPercent =
@@ -23,18 +22,14 @@ const CourseCard = ({ course, index }) => {
       transition={{ duration: 0.4, delay: index * 0.06, ease: "easeOut" }}
       className="group relative flex flex-col rounded-2xl bg-card border border-border shadow-sm hover:border-primary/20 transition-all duration-300"
     >
-      {/* Discount badge */}
       {hasDiscount && (
-        <div className="absolute  -top-2.5 right-4 z-10">
-          <span className="inline-flex bg-black items-center gap-1 px-3 py-1 rounded-full bg-discount text-primary-foreground text-xs font-semibold shadow-sm">
+        <div className="absolute -top-2.5 right-4 z-10">
+          <span className="inline-flex bg-black items-center gap-1 px-3 py-1 rounded-full text-white text-xs font-semibold shadow-sm">
             <Tag className="w-3 h-3" />
             {discountPercent}% OFF
           </span>
         </div>
       )}
-
-      {/* Card top accent */}
-      {/* <div className="h-1.5 rounded-t-2xl bg-gradient-to-r from-primary/80 via-primary to-primary/60" /> */}
 
       <div className="flex flex-col flex-1 p-5 pt-4">
         {/* Status & Category row */}
@@ -44,14 +39,14 @@ const CourseCard = ({ course, index }) => {
           </span>
 
           <span
-            className={`inline-flex  px-1.5 py-1 rounded-sm items-center gap-1.5 text-xs font-medium ${
+            className={`inline-flex px-1.5 py-1 rounded-sm items-center gap-1.5 text-xs font-medium ${
               isActive
                 ? "text-green-700 bg-green-200"
                 : "text-red-700 bg-red-200"
             }`}
           >
             <span
-              className={`w-1.5 h-1.5 rounded-full  ${
+              className={`w-1.5 h-1.5 rounded-full ${
                 isActive ? "bg-green-700" : "bg-red-700"
               }`}
             />
@@ -81,25 +76,26 @@ const CourseCard = ({ course, index }) => {
           </span>
         </div>
 
-        {/* Divider */}
         <div className="border-t border-border" />
 
         {/* Price & Action */}
         <div className="flex flex-col sm:flex-row items-start gap-10 sm:gap-0 sm:items-center justify-between pt-4">
           <div className="flex md:flex-row flex-col items-baseline gap-2">
             <span className="text-xl font-bold text-foreground font-heading">
-              ${newPrice ? newPrice.toLocaleString() : course.price}
+              ${newPrice ? newPrice.toLocaleString() : "N/A"}
             </span>
 
             {hasDiscount && (
-              <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-black text-primary-foreground text-xs font-semibold">
-                {discountPercent}% OFF
+              <span className="line-through text-muted-foreground text-sm">
+                ${oldPrice.toLocaleString()}
               </span>
             )}
           </div>
-          <Link href={`/our-courses/${course.slug}`}>
+
+          {/* ✅ Fix: use courseSlug instead of course.slug directly */}
+          <Link href={`/our-courses/${course.id}`}>
             <button className="inline-flex items-center gap-1.5 px-4 py-2 rounded-sm bg-primary text-primary-foreground text-sm font-medium hover:opacity-90 transition-opacity shadow-sm">
-                View Details
+              View Details
               <ArrowUpRight className="w-3.5 h-3.5" />
             </button>
           </Link>

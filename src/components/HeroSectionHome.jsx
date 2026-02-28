@@ -3,6 +3,7 @@ import { Sparkles, Globe, Atom, Code2 } from "lucide-react";
 import { motion } from "framer-motion";
 import StatCard from "./ui/StatCard";
 import { Button } from "./ui/button";
+import Link from "next/link";
 
 export default function HeroSectionHome() {
   return (
@@ -25,10 +26,14 @@ export default function HeroSectionHome() {
         </p>
 
         <div className="flex flex-col justify-center sm:flex-row gap-3 w-full max-w-md">
-          <Button className="w-full sm:w-auto">Get Started</Button>
-          <Button variant="outline" className="w-full sm:w-auto">
-            Our Work
-          </Button>
+          <Link href="/contact" >
+            <Button className="w-full sm:w-auto">Get Started</Button>
+          </Link>
+          <Link href="/about-us">
+            <Button variant="outline" className="w-full sm:w-auto">
+              Know More
+            </Button>
+          </Link>
         </div>
       </div>
 

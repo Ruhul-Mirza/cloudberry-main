@@ -25,8 +25,8 @@ const AllCoursesDropdown = () => {
         const data = await res.json();
 
         const courseData =
-          data?.data?.[0]?.filter((course) => course.status === "active") || [];
-
+          data?.data?.filter((course) => course.status === "active") || [];
+          console.log("Fetched courses:", courseData);
         setCourses(courseData);
       } catch (err) {
         console.error("Courses fetch error:", err);
@@ -82,10 +82,12 @@ const AllCoursesDropdown = () => {
             onClick={() => setIsOpen(false)}
           />
 
-          <div className="absolute left-0 top-full z-50 mt-2 flex w-[900px] rounded bg-white/90 backdrop-blur-md  border border-border shadow-sm">
+          <div className="absolute left-0 top-full z-50 mt-2 flex w-[900px] rounded bg-white  border border-border shadow-sm">
             {/* LEFT */}
             <div className="w-[280px] border-r border-border py-4">
-              <h3 className="px-5 pb-3 text-md font-semibold border-b">Categories</h3>
+              <h3 className="px-5 pb-3 text-md font-semibold border-b">
+                Categories
+              </h3>
 
               <ul>
                 {categories.map((cat) => (
@@ -107,7 +109,9 @@ const AllCoursesDropdown = () => {
 
             {/* RIGHT */}
             <div className="flex-1 p-5">
-              <h3 className="mb-4 text-base font-semibold border-b pb-2">{activeCategory}</h3>
+              <h3 className="mb-4 text-base font-semibold border-b pb-2">
+                {activeCategory}
+              </h3>
 
               {activeCourses.length > 0 ? (
                 <div className="grid grid-cols-2 gap-3">
@@ -137,7 +141,7 @@ const AllCoursesDropdown = () => {
                           </div>
 
                           <Link
-                            href={`/our-courses/${slug}`}
+                            href={`/our-courses/${course.id}`}
                             onClick={() => setIsOpen(false)}
                             className="inline-flex items-center gap-1 rounded bg-black px-3 py-1.5 text-xs font-medium text-white hover:bg-black/90"
                           >

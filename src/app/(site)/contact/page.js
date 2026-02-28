@@ -29,6 +29,20 @@ function ContactHero({ eyebrow, title, subtitle }) {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showThankYou, setShowThankYou] = useState(false);
+  useEffect(() => {
+    if (showThankYou) {
+      const timer = setTimeout(() => {
+        setShowThankYou(false);
+        setFormData({
+          name: "",
+          email: "",
+          message: "",
+        });
+      }, 120000); // 2 minutes
+
+      return () => clearTimeout(timer);
+    }
+  }, [showThankYou]);
   // Fetch courses
   useEffect(() => {
     if (!API_URL) return;
@@ -292,7 +306,7 @@ function ContactHero({ eyebrow, title, subtitle }) {
           </div>
         </motion.div>
       </div>
-      <FaqSection/>
+      <FaqSection />
     </section>
   );
 }

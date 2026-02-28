@@ -58,6 +58,8 @@ export default function Page() {
   const columns = [
     { field: "student_name", label: "Student", width: 220 },
     { field: "rating", label: "Rating", width: 100 },
+    { field: "message", label: "Message", width: 320 },
+
     {
       field: "status",
       label: "Status",
@@ -84,7 +86,12 @@ export default function Page() {
 
   // ================= EDIT FIELDS =================
   const editFields = [
-    { name: "student_name", label: "Student Name", type: "text", disabled: true },
+    {
+      name: "student_name",
+      label: "Student Name",
+      type: "text",
+      disabled: true,
+    },
     {
       name: "status",
       label: "Status",
@@ -126,7 +133,6 @@ export default function Page() {
     fetchReviews(filterValues);
   };
 
-
   // ================= HANDLERS =================
   const handleSaveEdit = async (updatedData) => {
     try {
@@ -164,17 +170,32 @@ export default function Page() {
   // ================= RENDER =================
   return (
     <>
-      <Box sx={{ display: "flex", justifyContent:"space-between",alignItems:"center", mb: 2 }}>
-        <DynamicTitle/>
-        <Button  onClick={() => setAddModal(true)} disabled={loading}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          mb: 2,
+        }}
+      >
+        <DynamicTitle />
+
+        <button
+          onClick={() => setAddModal(true)}
+          disabled={loading}
+          className="rounded bg-black px-5 py-2 text-sm font-semibold text-white"
+        >
           Add Review
-        </Button>
+        </button>
+        {/* <Button onClick={() => setAddModal(true)} disabled={loading}>
+          Add Review
+        </Button> */}
       </Box>
 
       <DataTable
         data={reviews}
-        filters={filters}          
-        onFilterChange={handleFilterChange} 
+        filters={filters}
+        onFilterChange={handleFilterChange}
         columns={columns}
         onEdit={(row) => setEditModal({ open: true, data: row })}
         onDelete={(row) => setDeleteModal({ open: true, data: row })}
