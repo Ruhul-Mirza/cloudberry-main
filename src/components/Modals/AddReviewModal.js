@@ -1,3 +1,4 @@
+// src/components/Modals/AddReviewModal.jsx
 "use client";
 
 import React, { useState } from "react";
@@ -15,7 +16,6 @@ import {
   Option,
   Switch,
   Textarea,
-  Typography,
 } from "@mui/joy";
 
 export default function AddReviewModal({
@@ -43,43 +43,22 @@ export default function AddReviewModal({
 
   return (
     <Modal open={open} onClose={onClose}>
-      <ModalDialog
-        sx={{
-          width: "100%",
-          maxWidth: 520,
-          maxHeight: "90vh",
-          overflow: "auto",
-          borderRadius: "12px",
-          bgcolor: "#fff",
-          boxShadow: "lg",
-          p: 3,
-        }}
-      >
-        <DialogTitle sx={{ fontWeight: 700, color: "#111" }}>
-          Add Review
-        </DialogTitle>
+      <ModalDialog size="md">
+        <DialogTitle>Add Review</DialogTitle>
 
-        <DialogContent
-          sx={{
-            display: "grid",
-            gap: 2,
-            mt: 1,
-          }}
-        >
+        <DialogContent sx={{ display: "grid", gap: 2 }}>
           <FormControl required>
-            <FormLabel sx={{ color: "#444" }}>Student Name</FormLabel>
+            <FormLabel>Student Name</FormLabel>
             <Input
-              variant="outlined"
               value={form.student_name}
               onChange={(e) =>
                 handleChange("student_name", e.target.value)
               }
-              sx={{ bgcolor: "#fff" }}
             />
           </FormControl>
 
           <FormControl required>
-            <FormLabel sx={{ color: "#444" }}>Rating (1–5)</FormLabel>
+            <FormLabel>Rating (1–5)</FormLabel>
             <Input
               type="number"
               min={1}
@@ -92,7 +71,7 @@ export default function AddReviewModal({
           </FormControl>
 
           <FormControl required>
-            <FormLabel sx={{ color: "#444" }}>Review Message</FormLabel>
+            <FormLabel>Review Message</FormLabel>
             <Textarea
               minRows={3}
               placeholder="Write the review message here..."
@@ -104,7 +83,7 @@ export default function AddReviewModal({
           </FormControl>
 
           <FormControl>
-            <FormLabel sx={{ color: "#444" }}>Status</FormLabel>
+            <FormLabel>Status</FormLabel>
             <Select
               value={form.status}
               onChange={(_, val) => handleChange("status", val)}
@@ -116,7 +95,7 @@ export default function AddReviewModal({
           </FormControl>
 
           <FormControl>
-            <FormLabel sx={{ color: "#444" }}>YouTube Embed Link</FormLabel>
+            <FormLabel>YouTube Embed Link</FormLabel>
             <Input
               placeholder="https://youtube.com/..."
               value={form.youtube_embed}
@@ -126,10 +105,9 @@ export default function AddReviewModal({
             />
           </FormControl>
 
-          <FormControl orientation="horizontal" sx={{ mt: 1 }}>
-            <FormLabel sx={{ color: "#444", flex: 1 }}>Publish</FormLabel>
+          <FormControl orientation="horizontal">
+            <FormLabel>Publish</FormLabel>
             <Switch
-              color="neutral"
               checked={form.is_published}
               onChange={(e) =>
                 handleChange("is_published", e.target.checked)
@@ -138,33 +116,11 @@ export default function AddReviewModal({
           </FormControl>
         </DialogContent>
 
-        <DialogActions
-          sx={{
-            mt: 2,
-            justifyContent: "flex-end",
-            gap: 1,
-          }}
-        >
-          <Button
-            variant="plain"
-            color="neutral"
-            onClick={onClose}
-          >
+        <DialogActions>
+          <Button variant="plain" onClick={onClose}>
             Cancel
           </Button>
-
-          <Button
-            loading={loading}
-            onClick={handleSubmit}
-            color="neutral"
-            sx={{
-              bgcolor: "#111",
-              color: "#fff",
-              "&:hover": {
-                bgcolor: "#000",
-              },
-            }}
-          >
+          <Button loading={loading} onClick={handleSubmit}>
             Add Review
           </Button>
         </DialogActions>

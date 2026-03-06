@@ -220,7 +220,7 @@ export default function Sidebar() {
           </ListItem>
 
           {/* Courses Nested */}
-          {/* <ListItem nested>
+          <ListItem nested>
             <Toggler
               defaultExpanded={isCoursesActive}
               renderToggle={({ open, setOpen }) => (
@@ -267,7 +267,7 @@ export default function Sidebar() {
                 </ListItem>
               </List>
             </Toggler>
-          </ListItem> */}
+          </ListItem>
         </List>
       </Box>
 
