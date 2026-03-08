@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown } from "lucide-react";
+import Link from "next/link";
 
 const faqs = [
   {
@@ -43,7 +44,7 @@ export default function FaqSection() {
       </div>
 
       {/* FAQ Container */}
-      <div className="max-w-4xl mx-auto border border-white/10 rounded-sm bg-white/[0.03] backdrop-blur-md shadow-[0_0_30px_rgba(255,255,255,0.05)] divide-y divide-white/10 overflow-hidden">
+      <div className="max-w-4xl mx-auto border border-white/10 rounded bg-white/[0.03] backdrop-blur-md shadow-[0_0_30px_rgba(255,255,255,0.05)] divide-y divide-white/10 overflow-hidden">
         {faqs.map((faq, i) => (
           <motion.div
             key={i}
@@ -110,12 +111,12 @@ export default function FaqSection() {
       {/* Footer note */}
       <div className="text-center mt-14 text-gray-500 text-sm">
         Still have questions?{" "}
-        <a
+        <Link
           href="#contact"
           className="text-white hover:text-white-300 font-medium underline-offset-4 hover:underline"
         >
           Contact our support
-        </a>
+        </Link>
         .
       </div>
 

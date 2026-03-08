@@ -15,7 +15,8 @@ export default function OurCourses() {
         subtitle="Structured learning for long-term mastery"
         cardTitle="About Our Courses"
         cardDescription="lorem500 ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. lorem500 ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. lorem500 ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. lorem500 ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.lorem500 ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-        ctaText="Enroll Now"
+        ctaText="Get in touch"
+        href="/contact"
         imageSrc={logo}
       />
       <CourseSection />

@@ -65,8 +65,8 @@ export default function RowMenu({
               Edit
             </MenuItem>
           )}
-          {onRename && <MenuItem onClick={onRename}>Rename</MenuItem>}
-          {onMove && <MenuItem onClick={onMove}>Move</MenuItem>}
+          {/* {onRename && <MenuItem onClick={onRename}>Rename</MenuItem>}
+          {onMove && <MenuItem onClick={onMove}>Move</MenuItem>} */}
 
           {/* Custom actions */}
           {actions.map((action, index) => (

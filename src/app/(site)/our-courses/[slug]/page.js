@@ -127,8 +127,8 @@ export default function SingleCoursePage() {
               </div>
 
               <Link href="/contact">
-                <button className="w-full bg-black text-white py-2 rounded font-semibold hover:opacity-90 transition">
-                  Enroll Now
+                <button className="w-full capitalize bg-black text-white py-2 rounded font-semibold hover:opacity-90 transition">
+                  get in touch
                 </button>
               </Link>
 

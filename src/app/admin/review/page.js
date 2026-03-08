@@ -14,10 +14,12 @@ import {
 } from "@/services/reviewService";
 
 import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
+import ReviewsRoundedIcon from "@mui/icons-material/ReviewsRounded";
 import BlockIcon from "@mui/icons-material/Block";
 import AutorenewRoundedIcon from "@mui/icons-material/AutorenewRounded";
 import { Box, Button } from "@mui/joy";
 import DynamicTitle from "@/components/DynamicTitle";
+import StatsCard from "@/components/StatCard";
 
 export default function Page() {
   // ================= STATES =================
@@ -54,6 +56,19 @@ export default function Page() {
     fetchReviews();
   }, []);
 
+  const totalReviews = reviews.length;
+
+  const approvedReviews = reviews.filter((r) => r.status === "approved").length;
+
+  const pendingReviews = reviews.filter((r) => r.status === "pending").length;
+
+  const approvedPercent = totalReviews
+    ? Math.round((approvedReviews / totalReviews) * 100)
+    : 0;
+
+  const pendingPercent = totalReviews
+    ? Math.round((pendingReviews / totalReviews) * 100)
+    : 0;
   // ================= COLUMNS =================
   const columns = [
     { field: "student_name", label: "Student", width: 220 },
@@ -191,7 +206,30 @@ export default function Page() {
           Add Review
         </Button> */}
       </Box>
+       {/* STATS
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+        <StatsCard
+          icon={<ReviewsRoundedIcon />}
+          count={totalReviews}
+          label="Total Reviews"
+          percent={100}
+        />
 
+        <StatsCard
+          icon={<CheckRoundedIcon />}
+          count={approvedReviews}
+          label="Approved Reviews"
+          percent={approvedPercent}
+        />
+
+        <StatsCard
+          icon={<AutorenewRoundedIcon />}
+          count={pendingReviews}
+          label="Pending Reviews"
+          percent={pendingPercent}
+        />
+      </div>
+       */}
       <DataTable
         data={reviews}
         filters={filters}

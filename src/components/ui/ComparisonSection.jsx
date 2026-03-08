@@ -174,13 +174,13 @@ export default function ComparisonSection() {
             </div>
           </div>
         </div>
-        <div className="mt-20 flex justify-center">
+        {/* <div className="mt-20 flex justify-center">
           <Link href="#">
             <Button variant="outline" className="w-full sm:w-auto p-5">
               Read More
             </Button>
           </Link>
-        </div>
+        </div> */}
       </div>
     </section>
   );

@@ -330,7 +330,6 @@ export default function Page() {
         columns={columns}
         onEdit={handleEdit}
         onDelete={handleDelete}
-        showCheckbox
         filters={filters}
         showPagination
         loading={loading}

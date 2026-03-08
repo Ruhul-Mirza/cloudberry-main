@@ -188,7 +188,6 @@ export default function Page() {
         onEdit={handleEdit}
         onRename={handleRename}
         onDelete={handleDelete}
-        showCheckbox
         showPagination
         itemsPerPage={10}
         loading={loading}

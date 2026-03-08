@@ -141,7 +141,7 @@ const Header = () => {
   );
 
   return (
-    <nav className="sticky top-0 z-30 w-full border-b bg-white shadow-sm">
+    <nav className="sticky top-0 z-30 w-full border-b bg-gray-50 shadow-sm">
       {/* ================= TOP HEADER ================= */}
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
         {/* MOBILE + MD LEFT */}
@@ -152,19 +152,23 @@ const Header = () => {
 
           {/* md logo */}
           <div className="hidden md:block">
-            <Image
-              src={logo}
-              alt="logo"
-              width={176}
-              height={48}
-              className="w-36 h-auto"
-            />
+            <Link href="/">
+              <Image
+                src={logo}
+                alt="logo"
+                width={176}
+                height={48}
+                className="w-36 h-auto"
+              />
+            </Link>
           </div>
         </div>
 
         {/* DESKTOP LOGO + DROPDOWN */}
         <div className="hidden lg:flex items-center gap-5">
-          <Image src={logo} alt="logo" width={176} height={48} />
+          <Link href="/">
+            <Image src={logo} alt="logo" width={176} height={48} />
+          </Link>
           <AllCoursesDropdown />
         </div>
 
@@ -212,13 +216,15 @@ const Header = () => {
 
         {/* SM RIGHT LOGO */}
         <div className="block md:hidden">
-          <Image
-            src={logo}
-            alt="logo"
-            width={176}
-            height={48}
-            className="w-36 h-auto"
-          />
+          <Link href="/">
+            <Image
+              src={logo}
+              alt="logo"
+              width={176}
+              height={48}
+              className="w-36 h-auto"
+            />
+          </Link>
         </div>
       </div>
 
@@ -231,7 +237,9 @@ const Header = () => {
         <div className="flex flex-col h-full">
           {/* SIDEBAR HEADER */}
           <div className="flex items-center justify-between px-6 py-4 border-b">
-            <Image src={logo} alt="logo" width={140} height={40} />
+            <Link href="/">
+              <Image src={logo} alt="logo" width={140} height={40} />
+            </Link>
             <button onClick={toggleSidebar}>
               <X className="w-5 h-5" />
             </button>
@@ -370,8 +378,10 @@ const Header = () => {
           onClick={() => setIsReviewModalOpen(false)}
         >
           {/* prevent closing when clicking inside modal */}
-          <div onClick={(e) => e.stopPropagation()}     className="w-full sm:max-w-lg md:max-w-xl lg:max-w-2xl"
->
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="w-full sm:max-w-lg md:max-w-xl lg:max-w-2xl"
+          >
             <ReviewForm
               reviewForm={reviewForm}
               setReviewForm={setReviewForm}

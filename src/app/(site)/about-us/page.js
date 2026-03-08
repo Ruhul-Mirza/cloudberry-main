@@ -46,7 +46,8 @@ export default function AboutUs() {
         subtitle="Structured learning for long-term mastery"
         cardTitle="Why We Teach Differently"
         cardDescription="At our core, we believe that true expertise isn't built overnight—it's engineered through consistency and deep understanding. Our curriculum moves beyond surface-level tutorials, focusing on the fundamental principles that allow you to adapt to any challenge. By combining rigorous theory with hands-on application, we help students transition from 'knowledge seekers' to 'problem solvers.' Whether you are starting from scratch or leveling up your professional skills, our structured pathways are designed to bridge the gap between curiosity and career-ready mastery. Join thousands of learners who have chosen a deeper, more intentional way to grow."
-        ctaText="Enroll Now"
+        ctaText="Contact Us"
+        href="/contact"
       />
       <div className="grid grid-cols-1  md:grid-cols-2 gap-5 max-w-3xl mx-auto mt-10">
         <SampleCard

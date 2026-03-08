@@ -2,6 +2,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Tooltip from "@mui/material/Tooltip";
+import Link from "next/link";
 
 export default function CommonHero({
   eyebrow,
@@ -10,6 +11,7 @@ export default function CommonHero({
   cardTitle,
   cardDescription,
   ctaText,
+  href,
   imageSrc, // optional
 }) {
   return (
@@ -85,9 +87,11 @@ export default function CommonHero({
               </div>
 
               {ctaText && (
-                <button className="mt-6 md:mt-10 w-fit rounded-sm bg-foreground px-5 py-2 text-sm text-background hover:opacity-90 transition">
-                  {ctaText}
-                </button>
+                <Link href={href}>
+                  <button className="mt-6 md:mt-10 w-fit rounded-sm bg-foreground px-5 py-2 text-sm text-background hover:opacity-90 transition">
+                    {ctaText}
+                  </button>
+                </Link>
               )}
             </div>
           </div>
