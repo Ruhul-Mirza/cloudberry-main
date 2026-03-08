@@ -2,6 +2,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 export default function SecondaryCta() {
   return (
@@ -41,13 +42,15 @@ export default function SecondaryCta() {
             transition={{ duration: 0.9, delay: 0.2 }}
             className="flex flex-wrap justify-center gap-4"
           >
-            <button className="bg-white text-black px-8 py-3 rounded-full font-medium hover:bg-gray-100 transition-all duration-300 flex items-center gap-2">
-              Enroll Today <ArrowRight className="w-4 h-4" />
+            <Link href="/contact">
+            <button className="bg-white text-black px-8 py-3 rounded font-medium hover:bg-gray-100 transition-all duration-300 flex items-center gap-2">
+              Get in touch <ArrowRight className="w-4 h-4" />
             </button>
+            </Link>
 
-            <button className="border border-gray-500 text-gray-200 px-8 py-3 rounded-full font-medium hover:bg-gray-900 transition-all duration-300">
+            {/* <button className="border border-gray-500 text-gray-200 px-8 py-3 rounded-full font-medium hover:bg-gray-900 transition-all duration-300">
               Talk to an Advisor
-            </button>
+            </button> */}
           </motion.div>
 
           {/* Subtle Glow Accent */}
