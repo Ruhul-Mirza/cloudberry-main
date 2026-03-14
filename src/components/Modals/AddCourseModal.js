@@ -206,6 +206,16 @@ export default function AddCourseModal({
                 onChange={handleChange}
               />
             </FormControl>
+            
+            <FormControl>
+              <FormLabel>Stripe Link</FormLabel>
+              <Input
+                name="stripe_link"
+                placeholder="e.g. https://buy.stripe.com/aFa3cv49e2R47GbdvB6kg0Z"
+                value={form.stripe_link}
+                onChange={handleChange}
+              />
+            </FormControl>
 
             {/* FEATURE BULLET POINTS */}
             <FormControl>

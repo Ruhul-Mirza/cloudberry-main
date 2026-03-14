@@ -115,12 +115,31 @@ export default function Page() {
         </div>
       ),
     },
-
+    
     {
       field: "duration",
       label: "Duration",
       width: 140,
       render: (value) => value || "-",
+    },
+    
+    {
+      field: "stripe_link",
+      label: "Stripe Link",
+      width: 140,
+      render: (value) => (
+        <div
+          style={{
+            maxWidth: 230,
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+          }}
+          title={value}
+        >
+          {value}
+        </div>
+      ),
     },
 
     {
@@ -223,6 +242,12 @@ export default function Page() {
       label: "Duration",
       type: "text",
       placeholder: "e.g. 6 Weeks / 40 Hours",
+    },
+    {
+      name: "stripe_link",
+      label: "Stripe Link",
+      type: "text",
+      placeholder: "e.g. https://buy.stripe.com/aFa3cv49e2R47GbdvB6kg0Z",
     },
     {
       name: "feature_bullet_points",
