@@ -3,25 +3,26 @@
 import { CssVarsProvider } from "@mui/joy/styles";
 import CssBaseline from "@mui/joy/CssBaseline";
 import Box from "@mui/joy/Box";
+
+import theme from "@/app/admin/theme/joyTheme";
+
 import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
-import DynamicBreadcrumb from "@/components/DynamicBreadcrumb";
-import DynamicTitle from "@/components/DynamicTitle";
 import { useAuth } from "@/lib/useAuth";
 
-export default function AdminLayout({
-  children,
-}) {
+export default function AdminLayout({ children }) {
   const { loading } = useAuth();
 
-  if (loading) return null; // or spinner
+  if (loading) return null;
 
   return (
-    <CssVarsProvider disableTransitionOnChange>
+    <CssVarsProvider theme={theme} defaultMode="dark">
       <CssBaseline />
+
       <Box sx={{ display: "flex", minHeight: "100dvh" }}>
         <Header />
         <Sidebar />
+
         <Box
           component="main"
           sx={{
@@ -39,7 +40,6 @@ export default function AdminLayout({
             gap: 1,
           }}
         >
-          {/* <DynamicBreadcrumb /> */}
           {children}
         </Box>
       </Box>

@@ -50,15 +50,15 @@ export default function RowMenu({
       )}
 
       <Dropdown>
-        <MenuButton
+        <MenuButton style={{margin:"auto"}}
           slots={{ root: IconButton }}
           slotProps={{
-            root: { variant: "plain", color: "neutral", size: "sm" },
+            root: { variant: "plain", color: "primary", size: "sm" },
           }}
         >
           <MoreHorizRoundedIcon />
         </MenuButton>
-        <Menu size="sm" sx={{ minWidth: 140 }}>
+        <Menu variant="primary" size="sm" sx={{ minWidth: 140 }}>
           {onEdit && (
             <MenuItem onClick={onEdit}>
               <EditRoundedIcon fontSize="small" style={{ marginRight: 8 }} />

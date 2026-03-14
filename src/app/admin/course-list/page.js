@@ -79,9 +79,9 @@ export default function Page() {
     feature_bullet_points:
       typeof data.feature_bullet_points === "string"
         ? data.feature_bullet_points
-            .split("\n")
-            .map((item) => item.trim())
-            .filter(Boolean)
+          .split("\n")
+          .map((item) => item.trim())
+          .filter(Boolean)
         : data.feature_bullet_points,
   });
 
@@ -132,7 +132,13 @@ export default function Page() {
         return (
           <ul style={{ paddingLeft: 16, margin: 0 }}>
             {value.slice(0, 3).map((point, index) => (
-              <li key={index} style={{ fontSize: 13 }}>
+              <li key={index} style={{
+                maxWidth: 230,
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+              }}
+                title={value}>
                 {point}
               </li>
             ))}
@@ -163,16 +169,16 @@ export default function Page() {
 
     { field: "category_name", label: "Category", width: 160 },
 
-    {
-      field: "discount_available",
-      label: "Discount",
-      width: 130,
-      type: "chip",
-      chipConfig: {
-        true: { icon: <LocalOfferIcon />, color: "warning" },
-        false: { icon: <DoNotDisturb />, color: "neutral" },
-      },
-    },
+    // {
+    //   field: "discount_available",
+    //   label: "Discount",
+    //   width: 130,
+    //   type: "chip",
+    //   chipConfig: {
+    //     true: { icon: <LocalOfferIcon />, color: "warning" },
+    //     false: { icon: <DoNotDisturb />, color: "neutral" },
+    //   },
+    // },
 
     {
       field: "status",
@@ -186,7 +192,7 @@ export default function Page() {
     },
   ];
 
-   const filters = [
+  const filters = [
     {
       field: "status",
       label: "Status",
@@ -244,8 +250,8 @@ export default function Page() {
         { value: "inactive", label: "Inactive" },
       ],
     },
-    { name: "discount_available", label: "Discount Available", type: "boolean" },
-    { name: "discount_amount", label: "Discount Amount", type: "number" },
+    // { name: "discount_available", label: "Discount Available", type: "boolean" },
+    // { name: "discount_amount", label: "Discount Amount", type: "number" },
   ];
 
   /* ================= ACTIONS ================= */

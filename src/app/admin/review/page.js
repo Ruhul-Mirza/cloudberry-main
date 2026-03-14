@@ -195,13 +195,13 @@ export default function Page() {
       >
         <DynamicTitle />
 
-        <button
+        <Button
           onClick={() => setAddModal(true)}
           disabled={loading}
           className="rounded bg-black px-5 py-2 text-sm font-semibold text-white"
         >
           Add Review
-        </button>
+        </Button>
         {/* <Button onClick={() => setAddModal(true)} disabled={loading}>
           Add Review
         </Button> */}

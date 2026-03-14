@@ -262,7 +262,7 @@ export default function AddCourseModal({
             </FormControl>
 
             {/* DISCOUNT */}
-            <Checkbox
+            {/* <Checkbox
               label="Discount Available"
               name="discount_available"
               checked={form.discount_available}
@@ -282,7 +282,7 @@ export default function AddCourseModal({
                   {errors.discount_amount}
                 </FormHelperText>
               </FormControl>
-            )}
+            )} */}
           </Stack>
         </DialogContent>
 

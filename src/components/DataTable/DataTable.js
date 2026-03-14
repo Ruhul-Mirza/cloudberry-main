@@ -544,9 +544,9 @@ export default function DataTable({
                     actions.length > 0) && (
                     <td
                       style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
+                        // display: "flex",
+                        // justifyContent: "center",
+                        // alignItems: "center",
                       }}
                     >
                       <RowMenu

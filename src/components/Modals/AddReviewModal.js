@@ -43,7 +43,7 @@ export default function AddReviewModal({
 
   return (
     <Modal open={open} onClose={onClose}>
-      <ModalDialog size="md">
+      <ModalDialog size="lg" minWidth={500}>
         <DialogTitle>Add Review</DialogTitle>
 
         <DialogContent sx={{ display: "grid", gap: 2 }}>

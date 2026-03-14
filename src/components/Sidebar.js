@@ -75,7 +75,7 @@ export default function Sidebar() {
   return (
     <Sheet
       className="Sidebar"
-      sx={{
+      sx={(theme) => ({
         position: { xs: 'fixed', md: 'sticky' },
         transform: {
           xs: 'translateX(calc(100% * (var(--SideNavigation-slideIn, 0) - 1)))',
@@ -93,7 +93,8 @@ export default function Sidebar() {
         gap: 2,
         borderRight: '1px solid',
         borderColor: 'divider',
-      }}
+        backgroundColor: theme.vars.palette.background.surface,
+      })}
     >
       <GlobalStyles
         styles={(theme) => ({
@@ -129,7 +130,7 @@ export default function Sidebar() {
       {/* Header */}
       <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
         <Typography level="title-lg">Admin Portal</Typography>
-        <ColorSchemeToggle sx={{ ml: "auto" }} />
+        {/* <ColorSchemeToggle sx={{ ml: "auto" }} /> */}
       </Box>
 
       <Divider />
@@ -148,29 +149,32 @@ export default function Sidebar() {
       >
         <List
           size="sm"
-          sx={{
+          sx={(theme) => ({
             gap: 1,
             "--List-nestedInsetStart": "30px",
-            "--ListItem-radius": (theme) =>
-              theme.vars.radius.sm,
-          }}
-        >
-          {/* Dashboard */}
-          {/* <ListItem>
-            <ListItemButton
-              component={Link}
-              href="/admin"
-              selected={pathname === "/admin"}
-            >
-              <HomeRoundedIcon />
-              <ListItemContent>
-                <Typography level="title-sm">
-                  Dashboard
-                </Typography>
-              </ListItemContent>
-            </ListItemButton>
-          </ListItem> */}
+            "--ListItem-radius": theme.vars.radius.sm,
 
+            [`& .${listItemButtonClasses.root}`]: {
+              borderRadius: theme.vars.radius.sm,
+              transition: "all 0.2s ease",
+
+              "&:hover": {
+                backgroundColor:
+                  theme.vars.palette.mode === "dark"
+                    ? "#1f1f1f"
+                    : "rgba(0,0,0,0.1)",
+              },
+
+              "&.Mui-selected": {
+                backgroundColor:
+                  theme.vars.palette.mode === "dark"
+                    ? "#262626"
+                    : "rgba(0,0,0,0.1)",
+                fontWeight: 600,
+              },
+            },
+          })}
+        >
           {/* Reviews */}
           <ListItem>
             <ListItemButton
