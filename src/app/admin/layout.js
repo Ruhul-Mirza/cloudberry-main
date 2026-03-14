@@ -16,7 +16,7 @@ export default function AdminLayout({ children }) {
   if (loading) return null;
 
   return (
-    <CssVarsProvider theme={theme} defaultMode="dark">
+    <CssVarsProvider theme={theme} defaultMode="light">
       <CssBaseline />
 
       <Box sx={{ display: "flex", minHeight: "100dvh" }}>
